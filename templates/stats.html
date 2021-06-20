@@ -3,5 +3,38 @@
 {% block title %}Stats Page{% endblock %}
 
 {% block content %}
-<h1>This is the stats page!!</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Workout Type</th>
+      <th scope="col">Time (Minutes)</th>
+      <th scope="col">Ate Healthy</th>
+      <th scope="col">Time Slept (Hours)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">6/18/21</th>
+      <td>Strength</td>
+      <td>60</td>
+      <td>Yes</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th scope="row">6/19/21</th>
+      <td>Cardio</td>
+      <td>30</td>
+      <td>Yes</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th scope="row">6/20/21</th>
+      <td>Cardio</td>
+      <td>45</td>
+      <td>No</td>
+      <td>7.5</td>
+    </tr>
+  </tbody>
+</table>
 {% endblock %}
