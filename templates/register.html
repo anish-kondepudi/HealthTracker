@@ -3,5 +3,19 @@
 {% block title %}Register Page{% endblock %}
 
 {% block content %}
-<h1>This is the registration page!!</h1>
+<div class="login-page">
+  <div class="form">
+    <form>
+      <input type="text" placeholder="name"/>
+      <input type="password" placeholder="password"/>
+      <input type="text" placeholder="email address"/>
+      <button>create</button>
+      <p class="message">Already registered? <a href="/login">Sign In</a></p>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login_registration.css') }}">
 {% endblock %}

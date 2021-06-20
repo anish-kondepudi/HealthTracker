@@ -3,5 +3,18 @@
 {% block title %}Login Page{% endblock %}
 
 {% block content %}
-<h1>This is the login page!!</h1>
+<div class="login-page">
+  <div class="form">
+    <form class="login-form">
+      <input type="text" placeholder="username"/>
+      <input type="password" placeholder="password"/>
+      <button>login</button>
+      <p class="message">Not registered? <a href="/register">Create an account</a></p>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login_registration.css') }}">
 {% endblock %}
