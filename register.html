@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Register Page{% endblock %}
+
+{% block content %}
+<div class="login-page">
+  <div class="form">
+    <form>
+      <input type="text" placeholder="Name" required/>
+
+      <input type="email" placeholder="Email Address" required/>
+
+      <input 
+      id="password" 
+      type="password" 
+      placeholder="Password" 
+      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+      title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+      required/>
+
+      <input type="password" placeholder="Confirm Password" required oninput="check(this)"/>
+      <script language='javascript' type='text/javascript'>
+        function check(input) {
+            if (input.value != document.getElementById('password').value) {
+                input.setCustomValidity('Password Must be Matching.');
+            }
+        }
+        </script>
+      <button>create</button>
+      <p class="message">Already registered? <a href="/login">Sign In</a></p>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login_registration.css') }}">
+{% endblock %}
