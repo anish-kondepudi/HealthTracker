@@ -5,28 +5,67 @@
 {% block content %}
 <div class="login-page">
   <div class="form">
-    <form>
-      <input type="text" placeholder="Name" required/>
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      
+      <div class="form-group">
+        <!-- {{ form.username.label(class="form-control-label") }} -->
+        <!-- <input type="text" placeholder="Name" required/> -->
+        {% if form.username.errors %}
+            {{ form.username(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.username(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+      
 
-      <input type="email" placeholder="Email Address" required/>
-
-      <input 
-      id="password" 
-      type="password" 
-      placeholder="Password" 
-      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
-      title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-      required/>
-
-      <input type="password" placeholder="Confirm Password" required oninput="check(this)"/>
-      <script language='javascript' type='text/javascript'>
-        function check(input) {
-            if (input.value != document.getElementById('password').value) {
-                input.setCustomValidity('Password Must be Matching.');
-            }
-        }
-        </script>
-      <button>create</button>
+      <div class="form-group">
+        <!-- {{ form.email.label(class="form-control-label") }} -->
+        {% if form.email.errors %}
+            {{ form.email(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.email(class="form-control form-control-lg") }}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <!-- {{ form.password.label(class="form-control-label") }} -->
+        {% if form.password.errors %}
+            {{ form.password(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.password(class="form-control form-control-lg") }}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <!-- {{ form.confirm_password.label(class="form-control-label") }} -->
+        {% if form.confirm_password.errors %}
+            {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.confirm_password.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.confirm_password(class="form-control form-control-lg") }}
+        {% endif %}
+    </div>
+    <div class="form-group">
+      {{ form.submit(class="btn btn-outline-info") }}
+    </div>
       <p class="message">Already registered? <a href="/login">Sign In</a></p>
     </form>
   </div>
