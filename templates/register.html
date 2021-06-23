@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 {% extends "base.html" %}
 
 {% block title %}Register Page{% endblock %}
@@ -81,3 +82,88 @@
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login_registration.css') }}">
 {% endblock %}
+=======
+{% extends "base.html" %}
+
+{% block title %}Register Page{% endblock %}
+
+{% block content %}
+<body>
+    {% for mesg in get_flashed_messages() %}
+    <h1>{{ mesg }}</h1>
+    {% endfor %}
+  </body>
+<div class="login-page">
+</form>
+  <div class="form">
+    <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        <!-- {{ form.username.label(class="form-control-label") }} -->
+        <!-- <input type="text" placeholder="Name" required/> -->
+        {% if form.username.errors %}
+            {{ form.username(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.username(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+      
+
+      <div class="form-group">
+        <!-- {{ form.email.label(class="form-control-label") }} -->
+        {% if form.email.errors %}
+            {{ form.email(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.email(class="form-control form-control-lg") }}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <!-- {{ form.password.label(class="form-control-label") }} -->
+        {% if form.password.errors %}
+            {{ form.password(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.password(class="form-control form-control-lg") }}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <!-- {{ form.confirm_password.label(class="form-control-label") }} -->
+        {% if form.confirm_password.errors %}
+            {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.confirm_password.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.confirm_password(class="form-control form-control-lg") }}
+        {% endif %}
+    </div>
+    <div class="form-group">
+      {{ form.submit(class="btn btn-outline-info") }}
+    </div>
+      <p class="message">Already registered? <a href="/login">Sign In</a></p>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login_registration.css') }}">
+{% endblock %}
+>>>>>>> Stashed changes
