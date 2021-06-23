@@ -3,11 +3,16 @@
 {% block title %}Register Page{% endblock %}
 
 {% block content %}
+<body>
+    {% for mesg in get_flashed_messages() %}
+    <h1>{{ mesg }}</h1>
+    {% endfor %}
+  </body>
 <div class="login-page">
+</form>
   <div class="form">
     <form method="POST" action="">
       {{ form.hidden_tag() }}
-      
       <div class="form-group">
         <!-- {{ form.username.label(class="form-control-label") }} -->
         <!-- <input type="text" placeholder="Name" required/> -->
