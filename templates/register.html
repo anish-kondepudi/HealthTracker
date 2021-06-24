@@ -3,6 +3,7 @@
 {% block title %}Register Page{% endblock %}
 
 {% block content %}
+<div class="login-page">
 <body>
         {% if get_flashed_messages() %}
             {% for msg in get_flashed_messages() %}
@@ -14,12 +15,11 @@
         {% endif %}
       
 </body>
-
-<div class="login-page">
 </form>
   <div class="form">
     <form method="POST" action="">
       {{ form.hidden_tag() }}
+      
       <div class="form-group">
         <!-- {{ form.username.label(class="form-control-label") }} -->
         <!-- <input type="text" placeholder="Name" required/> -->
@@ -75,9 +75,7 @@
             {{ form.confirm_password(class="form-control form-control-lg") }}
         {% endif %}
     </div>
-    <div class="form-group">
-      {{ form.submit(class="btn btn-outline-info") }}
-    </div>
+    <button>create</button>
       <p class="message">Already registered? <a href="/login">Sign In</a></p>
     </form>
   </div>

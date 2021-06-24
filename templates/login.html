@@ -4,17 +4,61 @@
 
 {% block content %}
 <div class="login-page">
-  <div class="form">
-    <form class="login-form">
-      <input type="text" placeholder="username"/>
-      <input type="password" placeholder="password"/>
-      <button>login</button>
-      <p class="message">Not registered? <a href="/register">Create an account</a></p>
-    </form>
+  <body>
+          {% if get_flashed_messages() %}
+              {% for msg in get_flashed_messages() %}
+                  <div class="alert">
+                  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                      {{msg}}
+                  </div>
+              {% endfor %}
+          {% endif %}
+        
+  </body>
+  </form>
+    <div class="form">
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+          <!-- {{ form.email.label(class="form-control-label") }} -->
+          {% if form.email.errors %}
+              {{ form.email(class="form-control form-control-lg is-invalid") }}
+              <div class="invalid-feedback">
+                  {% for error in form.email.errors %}
+                      <span>{{ error }}</span>
+                  {% endfor %}
+              </div>
+          {% else %}
+              {{ form.email(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <!-- {{ form.password.label(class="form-control-label") }} -->
+            {% if form.password.errors %}
+                {{ form.password(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.password(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+  
+        <button>login</button>
+        <small class="text-muted ml-2">
+            <a href="#">Forgot Password?</a>
+        </small>
+      </form>
+    </div>
   </div>
-</div>
-{% endblock %}
+  {% endblock %}
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login_registration.css') }}">
 {% endblock %}
+
+
