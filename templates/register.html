@@ -21,8 +21,6 @@
       {{ form.hidden_tag() }}
       
       <div class="form-group">
-        <!-- {{ form.username.label(class="form-control-label") }} -->
-        <!-- <input type="text" placeholder="Name" required/> -->
         {% if form.username.errors %}
             {{ form.username(class="form-control form-control-lg is-invalid") }}
             <div class="invalid-feedback">
@@ -37,7 +35,6 @@
       
 
       <div class="form-group">
-        <!-- {{ form.email.label(class="form-control-label") }} -->
         {% if form.email.errors %}
             {{ form.email(class="form-control form-control-lg is-invalid") }}
             <div class="invalid-feedback">
@@ -50,7 +47,6 @@
         {% endif %}
     </div>
     <div class="form-group">
-        <!-- {{ form.password.label(class="form-control-label") }} -->
         {% if form.password.errors %}
             {{ form.password(class="form-control form-control-lg is-invalid") }}
             <div class="invalid-feedback">
@@ -63,7 +59,6 @@
         {% endif %}
     </div>
     <div class="form-group">
-        <!-- {{ form.confirm_password.label(class="form-control-label") }} -->
         {% if form.confirm_password.errors %}
             {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
             <div class="invalid-feedback">
