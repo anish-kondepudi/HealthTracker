@@ -4,10 +4,17 @@
 
 {% block content %}
 <body>
-    {% for mesg in get_flashed_messages() %}
-    <h1>{{ mesg }}</h1>
-    {% endfor %}
-  </body>
+        {% if get_flashed_messages() %}
+            {% for msg in get_flashed_messages() %}
+                <div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{msg}}
+                </div>
+            {% endfor %}
+        {% endif %}
+      
+</body>
+
 <div class="login-page">
 </form>
   <div class="form">
