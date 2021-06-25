@@ -2,6 +2,10 @@
 
 {% block title %}Login Page{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login_registration.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="login-page">
   <body>
@@ -53,10 +57,5 @@
       </form>
     </div>
   </div>
-  {% endblock %}
-
-{% block css %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login_registration.css') }}">
 {% endblock %}
-
 

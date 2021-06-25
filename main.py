@@ -41,6 +41,7 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        print("Button pressed!")
         if form.email.data == 'admin@admin.com' and form.password.data == 'password':
             flash('You have been logged in!', 'success')
             # flash(f'Welcome back, {form.username.data}!', 'success')
