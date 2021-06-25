@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
@@ -12,11 +13,11 @@ class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image = db.Column(db.String(20), nullable=False, default='default.jpg') # use hash
+    # image = db.Column(db.String(20), nullable=False, default='default.jpg') # use hash
     password = db.Column(db.String(60), nullable=False) # use hash
 
     def __repr__(self) :
-        return f"User('{self.username}','{self.email}','{self.image}')"
+        return f"User('{self.username}','{self.email}')"
 
 
 @app.route("/")
@@ -32,6 +33,7 @@ def stats():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        # first_name = request.form.get("fname")
         flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('register'))
     return render_template('register.html', title='Register', form=form)

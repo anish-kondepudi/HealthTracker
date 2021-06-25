@@ -3,16 +3,16 @@
 {% block title %}Home Page{% endblock %}
 
 {% block content %}
-<body>
-  {% if get_flashed_messages() %}
-      {% for msg in get_flashed_messages() %}
-          <div class="alert">
-          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-              {{msg}}
-          </div>
-      {% endfor %}
-  {% endif %}
-</body>
+
+{% if get_flashed_messages() %}
+  {% for msg in get_flashed_messages() %}
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      {{msg}}
+    </div>
+  {% endfor %}
+{% endif %}
+
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
