@@ -1,15 +1,17 @@
 from flask import Flask, render_template, url_for, flash, redirect, request, session
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
+from datetime import timedelta
 
 app = Flask(__name__)
+app.permanent_session_lifetime = timedelta(minutes=5)
+app.secret_key = "x{RD/'wutjN87mGN/acnEPSqkS4wp_"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 db = SQLAlchemy(app)
 
-# ||| Confused as to what 'image' is. Ask Mihika about it |||
 class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -20,7 +22,7 @@ class User(db.Model):
 @app.route("/")
 @app.route("/home")
 def home():
-	return render_template("home.html")
+    return render_template("home.html")
 
 @app.route("/stats")
 def stats():
@@ -52,7 +54,13 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(f'Account created for {username}!', 'success')
-        return redirect(url_for('register')) # ||| Redirect to home page upon successful registration |||
+
+        # Create session for user
+        session.permanent = True
+        session["username"] = username
+
+        flash(f'Registration Successful. Welcome, {username}!', 'success')
+        return redirect(url_for('home'))
 
     return render_template('register.html', title='Register', form=form)
 
@@ -69,13 +77,23 @@ def login():
         # Check if Login Credentials are correct
         user = User.query.filter_by(email=email).first()
         if user is not None and form.email.data == user.email and form.password.data == user.password: 
-            # ||| Flash does not work as happens in /login wheras user is redirected to /home |||
-            flash(f'Welcome back, {user.username}!', 'success') 
+            # Create session for user then redirect to home
+            session.permanent = True
+            session["username"] = user.username
+            flash(f'Welcome back, {user.username}!', 'success')
             return redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
 
     return render_template('login.html', title='Login', form=form)
+
+@app.route('/logout')
+def logout():
+    # Removes user from session and redirects to home
+    if "username" in session:
+        flash(f'Welcome back, {session["username"]}!', 'success')
+        session.pop("username", None)
+    return redirect(url_for("home"))
 
 # Temporary Route Made to See Entire Database
 @app.route('/users')

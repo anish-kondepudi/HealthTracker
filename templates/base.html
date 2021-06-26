@@ -28,13 +28,19 @@
           		<!-- Left Align: Links to Home and Stats Pages -->
           		<div class="navbar-collapse navbar-nav">
           			<a class="nav-item nav-link" href="/home">Home</a>
-          			<a class="nav-item nav-link" href="/stats">Stats</a>
+      			    {% if session["username"] %}
+				        <a class="nav-item nav-link" href="/stats">Stats</a>
+				    {% endif %}
           		</div>
 
           		<!-- Right Align: Links to Login and Register Page -->
           		<div class="navbar-nav">
-	          		<a class="nav-item nav-link" href="/login">Login</a>
-	      			<a class="nav-item nav-link" href="/register">Register</a>
+          			{% if session["username"] %}
+				        <a class="nav-item nav-link" href="/logout">Logout</a>
+				    {% else %}
+				        <a class="nav-item nav-link" href="/login">Login</a>
+	      				<a class="nav-item nav-link" href="/register">Register</a>
+				    {% endif %}
           		</div>
 
         	</div>
