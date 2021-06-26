@@ -9,16 +9,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
 db = SQLAlchemy(app)
 
+# ||| Confused as to what 'image' is. Ask Mihika about it |||
 class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     image = db.Column(db.String(20), nullable=False, default='default.jpg') # use hash
     password = db.Column(db.String(60), nullable=False) # use hash
-
-    def __repr__(self) :
-        return f"User('{self.username}','{self.email}')"
-
 
 @app.route("/")
 @app.route("/home")
@@ -33,15 +30,30 @@ def stats():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+
+        # Get User Input from HTML Form
         username = request.form.get("username")
         email = request.form.get("email")
         password = request.form.get("password")
+
         user = User(username=username, email=email, password=password)
+
+        # Check to see username is already in use
+        if User.query.filter_by(username=username).first() is not None:
+            flash(f'Registration Unsuccessful. The username you have entered is already in use', 'danger')
+            return render_template('register.html', title='Register', form=form)
+
+        # Check to see if email address is already in use
+        if User.query.filter_by(email=email).first() is not None:
+            flash(f'Registration Unsuccessful. The email you have entered is already in use', 'danger')
+            return render_template('register.html', title='Register', form=form)
+
+        # Add user to database
         db.session.add(user)
         db.session.commit()
-        # Add try and except to catch error of non-unique email/username
         flash(f'Account created for {username}!', 'success')
-        return redirect(url_for('register'))
+        return redirect(url_for('register')) # ||| Redirect to home page upon successful registration |||
+
     return render_template('register.html', title='Register', form=form)
 
 
@@ -49,13 +61,20 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        print("Button pressed!")
-        if form.email.data == 'admin@admin.com' and form.password.data == 'password':
-            flash('You have been logged in!', 'success')
-            # flash(f'Welcome back, {form.username.data}!', 'success')
+
+        # Get User Input from HTML Form
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        # Check if Login Credentials are correct
+        user = User.query.filter_by(email=email).first()
+        if user is not None and form.email.data == user.email and form.password.data == user.password: 
+            # ||| Flash does not work as happens in /login wheras user is redirected to /home |||
+            flash(f'Welcome back, {user.username}!', 'success') 
             return redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
+
     return render_template('login.html', title='Login', form=form)
 
 # Temporary Route Made to See Entire Database
@@ -78,7 +97,7 @@ def show_user(username):
             <div>Email: {user.email}</div>
             <div>Password:{user.password}</div>
             <div>----------------------------------------------</div>'''
-            
+
 # Temporary Route to Clear Database
 @app.route('/clear_users')
 def clear_users():
