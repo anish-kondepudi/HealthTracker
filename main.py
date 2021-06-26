@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Flask, render_template, url_for, flash, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
@@ -14,9 +15,23 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image = db.Column(db.String(20), nullable=False, default='default.jpg') # use hash
     password = db.Column(db.String(60), nullable=False) # use hash
+    stats = db.relationship('Stats', backref='author', lazy=True)
 
     def __repr__(self) :
         return f"User('{self.username}','{self.email}','{self.image}')"
+
+class Stats(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    workout_type = db.Column(db.String(100))
+    time_worked_out = db.Column(db.Integer, nullable=False)
+    ate_healthy = db.Column(db.Boolean, nullable=False)
+    time_slept = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.date_posted}')"
 
 
 @app.route("/")
@@ -26,7 +41,7 @@ def home():
 
 @app.route("/stats")
 def stats():
-	return render_template("stats.html")
+	return render_template("stats.html",posts=posts)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
