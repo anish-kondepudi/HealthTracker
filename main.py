@@ -95,6 +95,11 @@ def logout():
         session.pop("username", None)
     return redirect(url_for("home"))
 
+
+#############################################
+### TEMPORARY ROUTES FOR TESTING PURPOSES ###
+#############################################
+
 # Temporary Route Made to See Entire Database
 @app.route('/users')
 def users():
