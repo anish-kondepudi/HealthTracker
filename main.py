@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, flash, redirect, request
+from flask import Flask, render_template, url_for, flash, redirect, request, session
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
 
@@ -58,11 +58,36 @@ def login():
             flash('Login Unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-# Temporary Route Made to See Database
-# @app.route('/get_users/<username>', methods=['GET'])
-# def get_users():
-#     user = User.query.filter_by(username=username).first()
-#     return f'Username: {user.username}\nEmail: {user.email}\nPassword:{user.password}'
+# Temporary Route Made to See Entire Database
+@app.route('/users')
+def users():
+    users = User.query.all()
+    html = ''
+    for user in users:
+        html += f'''<div>Username: {user.username}</div>
+                <div>Email: {user.email}</div>
+                <div>Password:{user.password}</div>
+                <div>----------------------------------------------</div>'''
+    return html
+
+# Temporary Route Made to Specific User in Database
+@app.route('/user/<username>')
+def show_user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return f'''<div>Username: {user.username}</div>
+            <div>Email: {user.email}</div>
+            <div>Password:{user.password}</div>
+            <div>----------------------------------------------</div>'''
+            
+# Temporary Route to Clear Database
+@app.route('/clear_users')
+def clear_users():
+    try:
+        db.session.query(User).delete()
+        db.session.commit()
+        return "Success - Database cleared"
+    except:
+        return "Failed - Database not cleared"
 
 if __name__ == '__main__':
     app.run(debug=True)
