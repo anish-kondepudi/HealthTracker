@@ -2,20 +2,80 @@
 
 {% block title %}Register Page{% endblock %}
 
-{% block content %}
-<div class="login-page">
-  <div class="form">
-    <form>
-      <input type="text" placeholder="name"/>
-      <input type="password" placeholder="password"/>
-      <input type="text" placeholder="email address"/>
-      <button>create</button>
-      <p class="message">Already registered? <a href="/login">Sign In</a></p>
-    </form>
-  </div>
-</div>
-{% endblock %}
-
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login_registration.css') }}">
+{% endblock %}
+
+
+{% block content %}
+<div class="login-page">
+
+{% if get_flashed_messages() %}
+    {% for msg in get_flashed_messages() %}
+        <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{msg}}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="form">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+        {% if form.username.errors %}
+            {{ form.username(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.username(class="form-control form-control-lg") }}
+        {% endif %}
+        </div>
+          
+
+        <div class="form-group">
+            {% if form.email.errors %}
+                {{ form.email(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.email(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {% if form.password.errors %}
+                {{ form.password(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.password(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {% if form.confirm_password.errors %}
+                {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.confirm_password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.confirm_password(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <button>create</button>
+        <p class="message">Already registered? <a href="/login">Sign In</a></p>
+    </form>
+</div>
+
 {% endblock %}

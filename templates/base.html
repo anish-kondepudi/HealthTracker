@@ -4,7 +4,10 @@
 	<head>
 		<!-- Necessary Setup Links -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
+		<style>
+			.flashes { position:absolute }
+		</style>
 		<meta charset="utf-8">
 		{% block css %}{% endblock %}
 
@@ -25,13 +28,20 @@
           		<!-- Left Align: Links to Home and Stats Pages -->
           		<div class="navbar-collapse navbar-nav">
           			<a class="nav-item nav-link" href="/home">Home</a>
-          			<a class="nav-item nav-link" href="/stats">Stats</a>
+      			    {% if session["username"] %}
+				        <a class="nav-item nav-link" href="/stats">Statistics</a>
+				        <a class="nav-item nav-link" href="/log_data">Log Data</a>
+				    {% endif %}
           		</div>
 
           		<!-- Right Align: Links to Login and Register Page -->
           		<div class="navbar-nav">
-	          		<a class="nav-item nav-link" href="/login">Login</a>
-	      			<a class="nav-item nav-link" href="/register">Register</a>
+          			{% if session["username"] %}
+				        <a class="nav-item nav-link" href="/logout">Logout</a>
+				    {% else %}
+				        <a class="nav-item nav-link" href="/login">Login</a>
+	      				<a class="nav-item nav-link" href="/register">Register</a>
+				    {% endif %}
           		</div>
 
         	</div>
@@ -39,7 +49,7 @@
 
       	<!-- Main Container For Future Use -->
 	    <main role="main" class="container">
-	      	<div class="row">
+	      	<div class="content-block">
 	        	<div>
 	        		{% block content %}{% endblock %}
           		</div>

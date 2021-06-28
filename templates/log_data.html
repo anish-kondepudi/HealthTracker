@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Data Logging Page{% endblock %}
+
+{% block content %}
+
+<div class="shift">
+
+  <label for="exampleFormControlInput1" class="form-label">How do you feel today? (1-5)</label>
+  <div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling1" value="option1">
+      <label class="form-check-label">1</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling2" value="option2">
+      <label class="form-check-label">2</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling3" value="option3">
+      <label class="form-check-label">3</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling4" value="option4">
+      <label class="form-check-label">4</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling5" value="option5">
+      <label class="form-check-label">5</label>
+    </div>
+  </div>
+
+  <div>
+    <label for="customRange3" class="form-label">How much sleep did you get?</label>
+    <input id="sleepSlider" type="range" class="form-range" min="0" max="12" step="0.5" id="customRange3">
+  </div>
+
+  <div>
+    <select class="form-select" aria-label="Default select example">
+      <option selected>Did you work out today?</option>
+      <option value="1">Yes</option>
+      <option value="2">No</option>
+    </select>
+  </div>
+
+  <div>
+    <select class="form-select" aria-label="Default select example">
+      <option selected>Did you eat healthy today?</option>
+      <option value="1">Yes</option>
+      <option value="2">No</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="customRange3" class="form-label">How long was your workout? (minutes)</label>
+    <input id="sleepSlider" type="range" class="form-range" min="0" max="120" step="5" id="customRange3">
+  </div>
+
+  <div>
+    <label for="exampleFormControlInput1" class="form-label">Workout Type</label>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">Strength</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">Cardio</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">Other</label>
+    </div>  
+  </div>
+
+
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Track Unhealthy Food Here</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Pizza, Ice Cream, etc...">
+  </div>
+
+
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">What's one thing you did today that you're proud of?</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block css %}
+<style type="text/css">
+  .shift {
+    position: relative;
+    margin-top: 75px
+  }
+</style>
+{% endblock %}
