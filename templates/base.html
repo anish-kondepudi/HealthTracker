@@ -29,7 +29,8 @@
           		<div class="navbar-collapse navbar-nav">
           			<a class="nav-item nav-link" href="/home">Home</a>
       			    {% if session["username"] %}
-				        <a class="nav-item nav-link" href="/stats">Stats</a>
+				        <a class="nav-item nav-link" href="/stats">Statistics</a>
+				        <a class="nav-item nav-link" href="/log_data">Log Data</a>
 				    {% endif %}
           		</div>
 
@@ -48,7 +49,7 @@
 
       	<!-- Main Container For Future Use -->
 	    <main role="main" class="container">
-	      	<div class="row">
+	      	<div class="content-block">
 	        	<div>
 	        		{% block content %}{% endblock %}
           		</div>

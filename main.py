@@ -26,10 +26,22 @@ def home():
 
 @app.route("/stats")
 def stats():
-	return render_template("stats.html")
+    if "username" not in session:
+        return redirect(url_for('home'))
+    return render_template("stats.html")
+
+@app.route("/log_data")
+def log_data():
+    if "username" not in session:
+        return redirect(url_for('home'))
+    return render_template("log_data.html")
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    # If user is already logged in, redirect to home
+    if "username" in session:
+        return redirect(url_for('home'))
+
     form = RegistrationForm()
     if form.validate_on_submit():
 
@@ -67,6 +79,10 @@ def register():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    # If user is already logged in, redirect to home
+    if "username" in session:
+        return redirect(url_for('home'))
+
     form = LoginForm()
     if form.validate_on_submit():
 
