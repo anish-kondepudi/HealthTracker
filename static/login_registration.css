@@ -6,6 +6,31 @@
   margin: auto;
 }
 
+.alert {
+  padding: 20px;
+  background-color: #f44336; 
+  color: white;
+  margin: 100px auto auto;
+  width: 360px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
 .form {
   position: relative;
   z-index: 1;

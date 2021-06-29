@@ -1,24 +1,6 @@
-.alert {
-	position: absolute;
-	padding: 20px;
-	background-color: #2d682f; 
-	color: white;
-	margin: 50px auto auto;
-	width: 360px;
-	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-}
+.bg-steel { background-color: #4CAF50; }
 
-/* The close button */
-.closebtn {
-	margin-left: 15px;
-	color: white;
-	font-weight: bold;
-	float: right;
-	font-size: 22px;
-	line-height: 20px;
-	cursor: pointer;
-	transition: 0.3s;
-}
+.navbar-nav .nav-link { color: #cbd5db; }
 
 /* When moving the mouse over the close button */
 .closebtn:hover {
@@ -37,3 +19,4 @@
 .nav-link:hover { 
 	color: #ffffff; 
 }
+
