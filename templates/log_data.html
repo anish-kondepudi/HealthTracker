@@ -31,8 +31,9 @@
   </div>
 
   <div>
-    <label for="customRange3" class="form-label">How much sleep did you get?</label>
-    <input id="sleepSlider" type="range" class="form-range" min="0" max="12" step="0.5" id="customRange3">
+    <label for="customRange3" class="form-label">How much sleep did you get?</label><br>
+    <input type="range" value="8" min="1" max="12" step="0.5" oninput="this.nextElementSibling.value = this.value">
+    <output>8</output>
   </div>
 
   <div>
@@ -53,23 +54,16 @@
 
   <div>
     <label for="customRange3" class="form-label">How long was your workout? (minutes)</label>
-    <input id="sleepSlider" type="range" class="form-range" min="0" max="120" step="5" id="customRange3">
+    <br>
+    <input type="range" value="60" min="0" max="120" step="15" oninput="this.nextElementSibling.value = this.value">
+    <output>60</output>
   </div>
 
   <div>
-    <label for="exampleFormControlInput1" class="form-label">Workout Type</label>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-      <label class="form-check-label" for="flexCheckDefault">Strength</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-      <label class="form-check-label" for="flexCheckDefault">Cardio</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-      <label class="form-check-label" for="flexCheckDefault">Other</label>
-    </div>  
+    <label for="customRange3" class="form-label">What type of exercise did you do?</label><br>
+    <label><input type="checkbox"> <span>Strength</span></label>
+    <label><input type="checkbox"> <span>Cardio</span></label>
+    <label><input type="checkbox"> <span>Other</span></label>
   </div>
 
 
@@ -81,7 +75,7 @@
 
   <div class="mb-3">
     <label for="exampleFormControlTextarea1" class="form-label">What's one thing you did today that you're proud of?</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="I am proud of..."></textarea>
   </div>
 
 </div>
