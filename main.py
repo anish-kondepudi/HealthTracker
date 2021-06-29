@@ -1,10 +1,12 @@
-from datetime import datetime
-from flask import Flask, render_template, url_for, flash, redirect, request
+from flask import Flask, render_template, url_for, flash, redirect, request, session
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
 from datetime import timedelta, datetime
 
 app = Flask(__name__)
+app.permanent_session_lifetime = timedelta(minutes=5)
+app.secret_key = "x{RD/'wutjN87mGN/acnEPSqkS4wp_"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
@@ -23,7 +25,6 @@ class User(db.Model):
 
 class Stats(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
     overall_feeling = db.Column(db.Integer, nullable=False)
     time_slept = db.Column(db.Integer, nullable=False)
     worked_out = db.Column(db.Boolean, nullable=False)
@@ -34,7 +35,6 @@ class Stats(db.Model):
     proud_achievement = db.Column(db.String(2000), nullable=False)
 
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -47,7 +47,6 @@ def home():
 
 @app.route("/stats")
 def stats():
-
     if "username" not in session:
         return redirect(url_for('home'))
     return render_template("stats.html")
@@ -58,8 +57,6 @@ def log_data():
         return redirect(url_for('home'))
     return render_template("log_data.html")
 
-
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     # If user is already logged in, redirect to home
@@ -68,8 +65,36 @@ def register():
 
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!', 'success')
-        return redirect(url_for('register'))
+
+        # Get User Input from HTML Form
+        username = request.form.get("username")
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        user = User(username=username, email=email, password=password)
+
+        # Check to see username is already in use
+        if User.query.filter_by(username=username).first() is not None:
+            flash(f'Registration Unsuccessful. The username you have entered is already in use', 'danger')
+            return render_template('register.html', title='Register', form=form)
+
+        # Check to see if email address is already in use
+        if User.query.filter_by(email=email).first() is not None:
+            flash(f'Registration Unsuccessful. The email you have entered is already in use', 'danger')
+            return render_template('register.html', title='Register', form=form)
+
+        # Add user to database
+        db.session.add(user)
+        db.session.commit()
+        flash(f'Account created for {username}!', 'success')
+
+        # Create session for user
+        session.permanent = True
+        session["username"] = username
+
+        flash(f'Registration Successful. Welcome, {username}!', 'success')
+        return redirect(url_for('home'))
+
     return render_template('register.html', title='Register', form=form)
 
 
@@ -81,15 +106,23 @@ def login():
 
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'admin@admin.com' and form.password.data == 'password':
-            flash('You have been logged in!', 'success')
-            # flash(f'Welcome back, {form.username.data}!', 'success')
+
+        # Get User Input from HTML Form
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        # Check if Login Credentials are correct
+        user = User.query.filter_by(email=email).first()
+        if user is not None and form.email.data == user.email and form.password.data == user.password: 
+            # Create session for user then redirect to home
+            session.permanent = True
+            session["username"] = user.username
+            flash(f'Welcome back, {user.username}!', 'success')
             return redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
 
     return render_template('login.html', title='Login', form=form)
-
 
 @app.route('/logout')
 def logout():
