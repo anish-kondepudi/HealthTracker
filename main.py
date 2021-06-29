@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, flash, redirect, request, session
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 app = Flask(__name__)
 app.permanent_session_lifetime = timedelta(minutes=5)
@@ -18,6 +18,27 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image = db.Column(db.String(20), nullable=False, default='default.jpg') # use hash
     password = db.Column(db.String(60), nullable=False) # use hash
+    stats = db.relationship('Stats', backref='author', lazy=True)
+
+    def __repr__(self) :
+        return f"User('{self.username}','{self.email}','{self.image}')"
+
+class Stats(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    overall_feeling = db.Column(db.Integer, nullable=False)
+    time_slept = db.Column(db.Integer, nullable=False)
+    worked_out = db.Column(db.Boolean, nullable=False)
+    ate_healthy = db.Column(db.Boolean, nullable=False)
+    time_worked_out = db.Column(db.Integer)
+    workout_type = db.Column(db.String(100))
+    unhealthy_food = db.Column(db.String(500))
+    proud_achievement = db.Column(db.String(2000), nullable=False)
+
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.date_posted}')"
 
 @app.route("/")
 @app.route("/home")
