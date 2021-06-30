@@ -3,38 +3,49 @@
 {% block title %}Statistics Page{% endblock %}
 
 {% block content %}
-<table class="table table-success table-striped table-hover">
-  <thead>
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Workout Type</th>
-      <th scope="col">Time (Minutes)</th>
-      <th scope="col">Ate Healthy</th>
-      <th scope="col">Time Slept (Hours)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">6/18/21</th>
-      <td>Strength</td>
-      <td>60</td>
-      <td>Yes</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th scope="row">6/19/21</th>
-      <td>Cardio</td>
-      <td>30</td>
-      <td>Yes</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th scope="row">6/20/21</th>
-      <td>Cardio</td>
-      <td>45</td>
-      <td>No</td>
-      <td>7.5</td>
-    </tr>
-  </tbody>
-</table>
+<div class="shift">
+  <table class="table table-success table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Workout Type</th>
+        <th scope="col">Time (Minutes)</th>
+        <th scope="col">Ate Healthy</th>
+        <th scope="col">Time Slept (Hours)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">6/18/21</th>
+        <td>Strength</td>
+        <td>60</td>
+        <td>Yes</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <th scope="row">6/19/21</th>
+        <td>Cardio</td>
+        <td>30</td>
+        <td>Yes</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <th scope="row">6/20/21</th>
+        <td>Cardio</td>
+        <td>45</td>
+        <td>No</td>
+        <td>7.5</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block css %}
+<style type="text/css">
+  .shift {
+    position: relative;
+    margin-top: 85px
+  }
+</style>
 {% endblock %}
