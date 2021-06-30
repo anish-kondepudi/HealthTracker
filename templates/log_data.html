@@ -6,76 +6,99 @@
 
 <div class="shift">
 
+  <!-- How do you feel? -->
   <label for="exampleFormControlInput1" class="form-label"><u>How do you feel today? (1-5)</u></label>
   <div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling1" value="option1">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling1" value="option1" onclick="fieldComplete1()">
       <label class="form-check-label">1</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling2" value="option2">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling2" value="option2" onclick="fieldComplete1()">
       <label class="form-check-label">2</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling3" value="option3">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling3" value="option3" onclick="fieldComplete1()">
       <label class="form-check-label">3</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling4" value="option4">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling4" value="option4" onclick="fieldComplete1()">
       <label class="form-check-label">4</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling5" value="option5">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling5" value="option5" onclick="fieldComplete1()">
       <label class="form-check-label">5</label>
     </div>
   </div><br>
 
-  <div>
+  <!-- How much sleep? -->
+  <div id="sleep" style="display:none">
     <label for="customRange3" class="form-label"><u>How much sleep did you get?</u></label><br>
-    <input type="range" value="8" min="1" max="12" step="0.5" oninput="this.nextElementSibling.value = this.value">
+    <input type="range" value="8" min="1" max="12" step="0.5" oninput="this.nextElementSibling.value = this.value" onclick="fieldComplete2()">
     <output>8</output>
   </div><br>
 
-  <div>
-    <select class="form-select" aria-label="Default select example">
-      <option selected>Did you work out today?</option>
-      <option value="1">Yes</option>
-      <option value="2">No</option>
-    </select>
+  <!-- Did you Workout? -->
+  <div id="workout" style="display:none">
+    <label for="exampleFormControlInput1" class="form-label"><u>Did you work out today?</u></label><br>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling1" value="option1" onclick="fieldComplete3()">
+      <label class="form-check-label">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling2" value="option2" onclick="fieldComplete3()">
+      <label class="form-check-label">No</label>
+    </div>
   </div><br>
 
-  <div>
-    <select class="form-select" aria-label="Default select example">
-      <option selected>Did you eat healthy today?</option>
-      <option value="1">Yes</option>
-      <option value="2">No</option>
-    </select>
+  <!-- Did you eat healthy? -->
+  <div id="healthy" style="display:none">
+    <label for="exampleFormControlInput1" class="form-label"><u>Did you eat healthy today?</u></label><br>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling1" value="option1" onclick="fieldComplete4()">
+      <label class="form-check-label">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling2" value="option2" onclick="fieldComplete4()">
+      <label class="form-check-label">No</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling2" value="option2" onclick="fieldComplete4()">
+      <label class="form-check-label">Somewhat</label>
+    </div>
   </div><br>
 
-  <div>
+  <!-- Length of Workout -->
+  <div id="workoutLength" style="display:none">
     <label for="customRange3" class="form-label"><u>How long was your workout? (minutes)</u></label>
     <br>
-    <input type="range" value="60" min="0" max="120" step="15" oninput="this.nextElementSibling.value = this.value">
+    <input type="range" value="60" min="0" max="120" step="15" oninput="this.nextElementSibling.value = this.value" onclick="fieldComplete5()">
     <output>60</output>
   </div><br>
 
-  <div>
+  <!-- Type of Workout -->
+  <div id="typeWorkout" style="display:none">
     <label for="customRange3" class="form-label"><u>What type of exercise did you do?</u></label><br>
-    <label><input type="checkbox"> <span>Strength</span></label>
-    <label><input type="checkbox"> <span>Cardio</span></label>
-    <label><input type="checkbox"> <span>Other</span></label>
+    <label><input type="checkbox" onclick="fieldComplete6()"> <span>Strength</span></label>
+    <label><input type="checkbox" onclick="fieldComplete6()"> <span>Cardio</span></label>
+    <label><input type="checkbox" onclick="fieldComplete6()"> <span>Other</span></label>
   </div><br>
 
-
-  <div class="mb-3">
+  <!-- Unhealthy Food -->
+  <div class="mb-3" id="unhealthyFood" style="display:none">
     <label for="exampleFormControlInput1" class="form-label"><u>Track Unhealthy Food Here</u></label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Pizza, Ice Cream, etc...">
+    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Pizza, Ice Cream, etc..." onchange="fieldComplete7()">
   </div><br>
 
-
-  <div class="mb-3">
+  <!-- Proud Achievement -->
+  <div class="mb-3" id="proudAchievement" style="display:none">
     <label for="exampleFormControlTextarea1" class="form-label"><u>What's one thing you did today that you're proud of?</u></label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="I am proud of..."></textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="I am proud of..." onchange="fieldComplete8()"></textarea>
+  </div><br>
+
+  <!-- Submit Button -->
+  <div style="text-align:center;display:none" id="submitButton">
+    <input type="submit" value="submit" class="button" >
   </div>
 
 </div>
@@ -88,5 +111,19 @@
     position: relative;
     margin-top: 75px
   }
+  .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
 </style>
+{% endblock %}
+
+{% block js%}
+<script type="text/javascript" src="{{ url_for('static', filename='log_data.js') }}"></script>
 {% endblock %}
