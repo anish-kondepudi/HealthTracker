@@ -94,14 +94,14 @@
 
   <!-- Unhealthy Food -->
   <div class="mb-3" id="unhealthyFood" style="display:none">
-    <label for="exampleFormControlInput1" class="form-label"><u>Track Unhealthy Food Here</u></label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Pizza, Ice Cream, etc..." onchange="fieldComplete7()">
+    <label for="unhealthyFoodInput" class="form-label"><u>Track Unhealthy Food Here</u></label>
+    <input type="email" class="form-control" id="unhealthyFoodInput" placeholder="Pizza, Ice Cream, etc..." onchange="fieldComplete7()">
   </div><br>
 
   <!-- Proud Achievement -->
   <div class="mb-3" id="proudAchievement" style="display:none">
-    <label for="exampleFormControlTextarea1" class="form-label"><u>What's one thing you did today that you're proud of?</u></label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="I am proud of..." onchange="fieldComplete8()"></textarea>
+    <label for="proudAchievementTextbox" class="form-label"><u>What's one thing you did today that you're proud of?</u></label>
+    <textarea class="form-control" id="proudAchievementTextbox" rows="3" placeholder="I am proud of..." onchange="fieldComplete8()"></textarea>
   </div><br>
 
   <!-- Submit Button -->
@@ -128,6 +128,14 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+  }
+  .form-control {
+    width: 40%;
+    text-align: center;
+    margin-left: 30%;
+  }
+  #proudAchievementTextbox {
+    height: 17.5vh;
   }
 </style>
 {% endblock %}
