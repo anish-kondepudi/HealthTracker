@@ -10,23 +10,23 @@
   <label for="exampleFormControlInput1" class="form-label"><u>How do you feel today? (1-5)</u></label>
   <div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling1" value="option1" onclick="fieldComplete1()">
+      <input class="form-check-input" type="radio" name="feeling" id="feeling1" value="option1" onclick="fieldComplete1()">
       <label class="form-check-label">1</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling2" value="option2" onclick="fieldComplete1()">
+      <input class="form-check-input" type="radio" name="feeling" id="feeling2" value="option2" onclick="fieldComplete1()">
       <label class="form-check-label">2</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling3" value="option3" onclick="fieldComplete1()">
+      <input class="form-check-input" type="radio" name="feeling" id="feeling3" value="option3" onclick="fieldComplete1()">
       <label class="form-check-label">3</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling4" value="option4" onclick="fieldComplete1()">
+      <input class="form-check-input" type="radio" name="feeling" id="feeling4" value="option4" onclick="fieldComplete1()">
       <label class="form-check-label">4</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling5" value="option5" onclick="fieldComplete1()">
+      <input class="form-check-input" type="radio" name="feeling" id="feeling5" value="option5" onclick="fieldComplete1()">
       <label class="form-check-label">5</label>
     </div>
   </div><br>
@@ -42,11 +42,11 @@
   <div id="workout" style="display:none">
     <label for="exampleFormControlInput1" class="form-label"><u>Did you work out today?</u></label><br>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling1" value="option1" onclick="fieldComplete3()">
+      <input class="form-check-input" type="radio" name="workout" id="workout1" value="option1" onclick="fieldComplete3()">
       <label class="form-check-label">Yes</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling2" value="option2" onclick="fieldComplete3()">
+      <input class="form-check-input" type="radio" name="workout" id="workout2" value="option2" onclick="fieldComplete3()">
       <label class="form-check-label">No</label>
     </div>
   </div><br>
@@ -55,15 +55,15 @@
   <div id="healthy" style="display:none">
     <label for="exampleFormControlInput1" class="form-label"><u>Did you eat healthy today?</u></label><br>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling1" value="option1" onclick="fieldComplete4()">
+      <input class="form-check-input" type="radio" name="healthy" id="healthy1" value="option1" onclick="fieldComplete4()">
       <label class="form-check-label">Yes</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling2" value="option2" onclick="fieldComplete4()">
+      <input class="form-check-input" type="radio" name="healthy" id="healthy2" value="option2" onclick="fieldComplete4()">
       <label class="form-check-label">No</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="feeling2" value="option2" onclick="fieldComplete4()">
+      <input class="form-check-input" type="radio" name="healthy" id="healthy3" value="option2" onclick="fieldComplete4()">
       <label class="form-check-label">Somewhat</label>
     </div>
   </div><br>
@@ -78,10 +78,18 @@
 
   <!-- Type of Workout -->
   <div id="typeWorkout" style="display:none">
-    <label for="customRange3" class="form-label"><u>What type of exercise did you do?</u></label><br>
-    <label><input type="checkbox" onclick="fieldComplete6()"> <span>Strength</span></label>
-    <label><input type="checkbox" onclick="fieldComplete6()"> <span>Cardio</span></label>
-    <label><input type="checkbox" onclick="fieldComplete6()"> <span>Other</span></label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" onclick="fieldComplete6()">
+      <label class="form-check-label" for="inlineCheckbox1">Strength</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" onclick="fieldComplete6()">
+      <label class="form-check-label" for="inlineCheckbox2">Cardio</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" onclick="fieldComplete6()">
+      <label class="form-check-label" for="inlineCheckbox3">Other</label>
+    </div>
   </div><br>
 
   <!-- Unhealthy Food -->
@@ -112,7 +120,7 @@
     margin-top: 75px
   }
   .button {
-    background-color: #4CAF50; /* Green */
+    background-color: #03a56a;
     border: none;
     color: white;
     padding: 15px 32px;
