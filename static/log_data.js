@@ -12,20 +12,10 @@ function fieldComplete2() {
   }
 }
 
-function fieldComplete3(y) {
-
+function fieldComplete3() {
   var x = document.getElementById("healthy");
   if (x.style.display === "none") {
     x.style.display = "block";
-  }
-
-  x = document.getElementById("workoutFollowup");
-  if (y) {
-    x.style.display = "block";
-  }
-  else {
-    console.log("NO");
-    x.style.display = "none";
   }
 }
 
