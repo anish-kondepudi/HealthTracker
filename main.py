@@ -51,10 +51,16 @@ def stats():
         return redirect(url_for('home'))
     return render_template("stats.html")
 
-@app.route("/log_data")
+@app.route("/log_data", methods=['GET', 'POST'])
 def log_data():
+    # If user is not logged in, redirect to home
     if "username" not in session:
         return redirect(url_for('home'))
+
+    # Fires when button is pressed
+    if request.method == 'POST':
+        print("You clicked button!!!")
+
     return render_template("log_data.html")
 
 @app.route("/register", methods=['GET', 'POST'])
