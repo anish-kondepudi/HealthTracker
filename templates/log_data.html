@@ -42,29 +42,12 @@
   <div id="workout" style="display:none">
     <label for="workoutBool" class="form-label"><u>Did you work out today?</u></label><br>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="workout" id="workoutBool1" value="option1" onclick="fieldComplete3()">
+      <input class="form-check-input" type="radio" name="workout" id="workoutBool1" value="option1" onclick="fieldComplete3(1)">
       <label class="form-check-label">Yes</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="workout" id="workoutBool2" value="option2" onclick="fieldComplete3()">
+      <input class="form-check-input" type="radio" name="workout" id="workoutBool2" value="option2" onclick="fieldComplete3(0)">
       <label class="form-check-label">No</label>
-    </div>
-  </div><br>
-
-  <!-- Did you eat healthy? -->
-  <div id="healthy" style="display:none">
-    <label for="healthyBool" class="form-label"><u>Did you eat healthy today?</u></label><br>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="healthy" id="healthyBool" value="option1" onclick="fieldComplete4()">
-      <label class="form-check-label">Yes</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="healthy" id="healthyBool" value="option2" onclick="fieldComplete4()">
-      <label class="form-check-label">No</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="healthy" id="healthyBool" value="option2" onclick="fieldComplete4()">
-      <label class="form-check-label">Somewhat</label>
     </div>
   </div><br>
 
@@ -72,7 +55,7 @@
   <div id="workoutLength" style="display:none">
     <label for="workoutTime" class="form-label"><u>How long was your workout? (minutes)</u></label>
     <br>
-    <input id="workoutTime" type="range" value="60" min="0" max="120" step="15" oninput="this.nextElementSibling.value = this.value" onclick="fieldComplete5()">
+    <input id="workoutTime" type="range" value="60" min="0" max="120" step="15" oninput="this.nextElementSibling.value = this.value">
     <output>60</output>
   </div><br>
 
@@ -80,29 +63,48 @@
   <div id="typeWorkout" style="display:none">
     <label for="workoutype" class="form-label"><u>What exercise(s) did you do?</u></label><br>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" id="workoutType" value="option1" onclick="fieldComplete6()">
+      <input class="form-check-input" type="checkbox" id="workoutType" value="option1" onclick="fieldComplete4()">
       <label class="form-check-label" for="workoutType">Strength</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" id="workoutType" value="option2" onclick="fieldComplete6()">
+      <input class="form-check-input" type="checkbox" id="workoutType" value="option2" onclick="fieldComplete4()">
       <label class="form-check-label" for="workoutType">Cardio</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" id="workoutType" value="option3" onclick="fieldComplete6()">
+      <input class="form-check-input" type="checkbox" id="workoutType" value="option3" onclick="fieldComplete4()">
       <label class="form-check-label" for="workoutType">Other</label>
     </div>
   </div><br>
 
+  <!-- Did you eat healthy? -->
+  <div id="healthy" style="display:none">
+    <label for="healthyBool" class="form-label"><u>Did you eat healthy today?</u></label><br>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="healthy" id="healthyBool" value="option1" onclick="fieldComplete5(1)">
+      <label class="form-check-label">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="healthy" id="healthyBool" value="option2" onclick="fieldComplete5(0)">
+      <label class="form-check-label">No</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="healthy" id="healthyBool" value="option2" onclick="fieldComplete5(0)">
+      <label class="form-check-label">Somewhat</label>
+    </div>
+  </div><br>
+
+
+
   <!-- Unhealthy Food -->
   <div class="mb-3" id="unhealthyFood" style="display:none">
     <label for="unhealthyFoodInput" class="form-label"><u>Track Unhealthy Food Here</u></label>
-    <input type="email" class="form-control" id="unhealthyFoodInput" placeholder="Pizza, Ice Cream, etc..." onchange="fieldComplete7()">
+    <input type="email" class="form-control" id="unhealthyFoodInput" placeholder="Pizza, Ice Cream, etc..." onchange="fieldComplete6()">
   </div><br>
 
   <!-- Proud Achievement -->
   <div class="mb-3" id="proudAchievement" style="display:none">
     <label for="proudAchievementTextbox" class="form-label"><u>What's one thing you did today that you're proud of?</u></label>
-    <textarea class="form-control" id="proudAchievementTextbox" rows="3" placeholder="I am proud of..." onchange="fieldComplete8()"></textarea>
+    <textarea class="form-control" id="proudAchievementTextbox" rows="3" placeholder="I am proud of..." onchange="fieldComplete7()"></textarea>
   </div>
 
   <!-- Submit Button -->
