@@ -1,12 +1,8 @@
-function fieldComplete1() {
-  document.getElementById("sleep").style.display = "block";
+function fieldComplete(divToShow) {
+  document.getElementById(divToShow).style.display = "block";
 }
 
-function fieldComplete2() {
-  document.getElementById("workout").style.display = "block";
-}
-
-function fieldComplete3(condition) {
+function fieldComplete1(condition) {
   var x = document.getElementById("healthy");
   var y = document.getElementById("typeWorkout");
   var z = document.getElementById("workoutLength");
@@ -21,11 +17,7 @@ function fieldComplete3(condition) {
   }
 }
 
-function fieldComplete4() {
-  document.getElementById("healthy").style.display = "block";
-}
-
-function fieldComplete5(condition) {
+function fieldComplete2(condition) {
   var x = document.getElementById("unhealthyFood");
   var y = document.getElementById("proudAchievement");
   if (condition == 0) {
@@ -35,12 +27,4 @@ function fieldComplete5(condition) {
     x.style.display = "none";
     y.style.display = "block";
   }
-}
-
-function fieldComplete6() {
-  document.getElementById("proudAchievement").style.display = "block";
-}
-
-function fieldComplete7() {
-  document.getElementById("submitButton").style.display = "block";
 }
