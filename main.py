@@ -26,12 +26,12 @@ class User(db.Model):
 class Stats(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     overall_feeling = db.Column(db.Integer, nullable=False)
-    time_slept = db.Column(db.Integer, nullable=False)
+    time_slept = db.Column(db.Float, nullable=False)
     worked_out = db.Column(db.Boolean, nullable=False)
-    ate_healthy = db.Column(db.Boolean, nullable=False)
-    time_worked_out = db.Column(db.Integer)
-    workout_type = db.Column(db.String(100))
-    unhealthy_food = db.Column(db.String(500))
+    ate_healthy = db.Column(db.String(100), nullable=False)
+    time_worked_out = db.Column(db.Integer, nullable=False)
+    workout_type = db.Column(db.String(100), nullable=False)
+    unhealthy_food = db.Column(db.String(500), nullable=False)
     proud_achievement = db.Column(db.String(2000), nullable=False)
 
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -62,9 +62,9 @@ def log_data():
 
         # Get User Input from HTML Form
         feeling = int(request.form.get('feeling'))
-        sleep = float(request.form.get('sleep')) # change to float in DB
+        sleep = float(request.form.get('sleep'))
         worked_out = bool(int(request.form.get('workout')))
-        ate_healthy = request.form.get('healthy') # change to string in DB
+        ate_healthy = request.form.get('healthy')
         proud_achievement = request.form.get('proudAchievement')
         time_worked_out = 0 # Default Value - If User did not Workout
         workout_type = "None" # Default Value - If User did not Workout
@@ -84,15 +84,22 @@ def log_data():
         if (len(proud_achievement) == 0): proud_achievement = "None"
         if (len(unhealthy_food) == 0): unhealthy_food = "None"
 
-        print(feeling)
-        print(sleep)
-        print(worked_out)
-        print(time_worked_out)
-        print(workout_type)
-        print(ate_healthy)
-        print(unhealthy_food)
-        print(proud_achievement)
-        print("You clicked button!!!")
+        user = User.query.filter_by(username=session["username"]).first()
+
+        stats = Stats(overall_feeling=feeling,
+                    time_slept=sleep,
+                    worked_out=worked_out,
+                    ate_healthy=ate_healthy,
+                    time_worked_out=time_worked_out,
+                    workout_type=workout_type,
+                    unhealthy_food=unhealthy_food,
+                    proud_achievement=proud_achievement,
+                    user_id=user.id,)
+
+        # add conditional to check if data created is not today!
+
+        # db.session.add()
+        # db.session.commit()
 
         flash(f'Entry successfully added!', 'success')
         return redirect(url_for('stats'))
@@ -195,9 +202,11 @@ def users():
 @app.route('/user/<username>')
 def show_user(username):
     user = User.query.filter_by(username=username).first_or_404()
+    stats = Stats.query.get_or_404(1)
     return f'''<div>Username: {user.username}</div>
             <div>Email: {user.email}</div>
             <div>Password:{user.password}</div>
+            <div>Stats:{stats}</div>
             <div>----------------------------------------------</div>'''
 
 # Temporary Route to Clear Database
