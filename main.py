@@ -57,9 +57,45 @@ def log_data():
     if "username" not in session:
         return redirect(url_for('home'))
 
-    # Fires when button is pressed
+    # Fires when submit button is pressed
     if request.method == 'POST':
+
+        # Get User Input from HTML Form
+        feeling = int(request.form.get('feeling'))
+        sleep = float(request.form.get('sleep')) # change to float in DB
+        worked_out = bool(int(request.form.get('workout')))
+        ate_healthy = request.form.get('healthy') # change to string in DB
+        proud_achievement = request.form.get('proudAchievement')
+        time_worked_out = 0 # Default Value - If User did not Workout
+        workout_type = "None" # Default Value - If User did not Workout
+        unhealthy_food = "None" # Default Value - If User ate Healthy
+
+        # Get workout info if user has worked out
+        if (worked_out):
+            time_worked_out = int(request.form.get('workoutTime'))
+            if len(request.form.getlist('workoutType')) == 0: workout_type = "None"
+            else: workout_type = ', '.join(request.form.getlist('workoutType'))
+
+        # Get unhealthy food info if user did not eat healthy
+        if (ate_healthy != "Yes"):
+            unhealthy_food = request.form.get('unhealthyFood')
+
+        # Edge case handling
+        if (len(proud_achievement) == 0): proud_achievement = "None"
+        if (len(unhealthy_food) == 0): unhealthy_food = "None"
+
+        print(feeling)
+        print(sleep)
+        print(worked_out)
+        print(time_worked_out)
+        print(workout_type)
+        print(ate_healthy)
+        print(unhealthy_food)
+        print(proud_achievement)
         print("You clicked button!!!")
+
+        flash(f'Entry successfully added!', 'success')
+        return redirect(url_for('stats'))
 
     return render_template("log_data.html")
 
