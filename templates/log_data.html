@@ -56,8 +56,7 @@
   <!-- Length of Workout -->
   <div id="workoutLength" style="display:none">
     <br>
-    <label for="workoutTime" class="form-label"><u>How long was your workout? (minutes)</u></label>
-    <br>
+    <label for="workoutTime" class="form-label"><u>How long was your workout? (minutes)</u></label><br>
     <input id="workoutTime" type="range" value="60" min="0" max="120" step="15" oninput="this.nextElementSibling.value = this.value">
     <output>60</output>
   </div>
@@ -109,7 +108,6 @@
 
   <!-- Proud Achievement -->
   <div class="mb-3" id="proudAchievement" style="display:none">
-    <br>
     <label for="proudAchievementTextbox" class="form-label"><u>What's one thing you did today that you're proud of?</u></label>
     <textarea class="form-control" id="proudAchievementTextbox" rows="3" placeholder="I am proud of..." onchange="fieldComplete('submitButton')"></textarea>
   </div>
