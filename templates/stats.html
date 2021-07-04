@@ -1,40 +1,12 @@
-{% extends "base.html" %}
-
-{% block title %}Statistics Page{% endblock %}
-
-{% block content %}
-<table class="table table-success table-striped table-hover">
-  <thead>
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Workout Type</th>
-      <th scope="col">Time (Minutes)</th>
-      <th scope="col">Ate Healthy</th>
-      <th scope="col">Time Slept (Hours)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">6/18/21</th>
-      <td>Strength</td>
-      <td>60</td>
-      <td>Yes</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th scope="row">6/19/21</th>
-      <td>Cardio</td>
-      <td>30</td>
-      <td>Yes</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th scope="row">6/20/21</th>
-      <td>Cardio</td>
-      <td>45</td>
-      <td>No</td>
-      <td>7.5</td>
-    </tr>
-  </tbody>
-</table>
+{% extends "stats_layout.html" %}
+{% block rows %}
+<tr><th scope="row">2021-07-04</th>
+                        <td>1</td>
+                        <td>12.0</td>
+                        <td>Yes</td>
+                        <td>Somewhat</td>
+                        <td>120</td>
+                        <td>Strength, Cardio, Other</td>
+                        <td>Ice Cream</td>
+                        <td>YESSIR</td></tr>
 {% endblock %}

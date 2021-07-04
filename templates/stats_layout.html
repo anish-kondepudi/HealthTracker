@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Statistics Page{% endblock %}
+
+{% block content %}
+<div class="shift">
+  <table class="table table-success table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Feeling</th>
+        <th scope="col">Sleep (Hours)</th>
+        <th scope="col">Worked Out</th>
+        <th scope="col">Ate Healthy</th>
+        <th scope="col">Time Worked Out (Hours)</th>
+        <th scope="col">Work Out Type</th>
+        <th scope="col">Unhealthy Food</th>
+        <th scope="col">Proud Achievement</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% block rows %}
+      {% endblock %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block css %}
+<style type="text/css">
+  .shift {
+    position: relative;
+    margin-top: 85px
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,25 @@
+.shift {
+  position: relative;
+  margin-top: 75px
+}
+.button {
+  background-color: #03a56a;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.form-control {
+  width: 40%;
+  text-align: center;
+  margin-left: 30%;
+}
+#proudAchievementTextbox {
+  height: 17vh;
+}
+#submitButton {
+  margin-top: 30px;
+}
