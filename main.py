@@ -16,9 +16,9 @@ class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image = db.Column(db.String(20), nullable=False, default='default.jpg') # use hash
+    image = db.Column(db.String(20), nullable=False, default='default.jpg') # delete and reconstruct DB - change db name
     password = db.Column(db.String(60), nullable=False) # use hash
-    stats = db.relationship('Stats', backref='author', lazy=True)
+    stats = db.relationship('Stats', backref='owner', lazy=True)
 
     def __repr__(self) :
         return f"User('{self.username}','{self.email}','{self.image}')"
@@ -38,7 +38,14 @@ class Stats(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
+        return f'''Stats("{self.overall_feeling}", 
+                "{self.time_slept}",
+                "{self.worked_out}",
+                "{self.ate_healthy}",
+                "{self.time_worked_out}",
+                "{self.workout_type}",
+                "{self.unhealthy_food}",
+                "{self.proud_achievement}")'''
 
 @app.route("/")
 @app.route("/home")
@@ -47,14 +54,40 @@ def home():
 
 @app.route("/stats")
 def stats():
+    # If user is not logged in, redirect to home
     if "username" not in session:
+        flash(f'You are not logged in!', 'danger')
         return redirect(url_for('home'))
+
+    # Update stats.html with information from database
+    statsPage = open("./templates/stats.html", "w").close()
+    statsPage = open("./templates/stats.html", "w")
+
+    statsPage.write('{% extends "stats_layout.html" %}\n{% block rows %}\n')
+
+    user = User.query.filter_by(username=session["username"]).first()
+    for entry in user.stats:
+
+        statsPage.write(f'''<tr><th scope="row">{str(entry.date_posted).split()[0]}</th>
+                        <td>{entry.overall_feeling}</td>
+                        <td>{entry.time_slept}</td>
+                        <td>{"Yes" if entry.worked_out else "No"}</td>
+                        <td>{entry.ate_healthy}</td>
+                        <td>{entry.time_worked_out}</td>
+                        <td>{entry.workout_type}</td>
+                        <td>{entry.unhealthy_food}</td>
+                        <td>{entry.proud_achievement}</td></tr>''')
+
+    statsPage.write('\n{% endblock %}')
+    statsPage.close()
+
     return render_template("stats.html")
 
 @app.route("/log_data", methods=['GET', 'POST'])
 def log_data():
     # If user is not logged in, redirect to home
     if "username" not in session:
+        flash(f'You are not logged in!', 'danger')
         return redirect(url_for('home'))
 
     # Fires when submit button is pressed
@@ -84,6 +117,7 @@ def log_data():
         if (len(proud_achievement) == 0): proud_achievement = "None"
         if (len(unhealthy_food) == 0): unhealthy_food = "None"
 
+        # Creates and links stats to specific user
         user = User.query.filter_by(username=session["username"]).first()
 
         stats = Stats(overall_feeling=feeling,
@@ -94,12 +128,18 @@ def log_data():
                     workout_type=workout_type,
                     unhealthy_food=unhealthy_food,
                     proud_achievement=proud_achievement,
-                    user_id=user.id,)
+                    owner=user)
 
-        # add conditional to check if data created is not today!
+        # If previous entry with same data exists, removes that entry
+        date_today = str(datetime.today()).split()[0]
 
-        # db.session.add()
-        # db.session.commit()
+        for entry in user.stats:
+            if str(entry.date_posted).split()[0] == date_today:
+                db.session.delete(entry)
+
+        # Updates Changes to Database
+        db.session.add(stats)
+        db.session.commit()
 
         flash(f'Entry successfully added!', 'success')
         return redirect(url_for('stats'))
@@ -110,6 +150,7 @@ def log_data():
 def register():
     # If user is already logged in, redirect to home
     if "username" in session:
+        flash(f'You are already logged in!', 'success')
         return redirect(url_for('home'))
 
     form = RegistrationForm()
@@ -151,6 +192,7 @@ def register():
 def login():
     # If user is already logged in, redirect to home
     if "username" in session:
+        flash(f'You are already logged in!', 'success')
         return redirect(url_for('home'))
 
     form = LoginForm()
@@ -195,6 +237,7 @@ def users():
         html += f'''<div>Username: {user.username}</div>
                 <div>Email: {user.email}</div>
                 <div>Password:{user.password}</div>
+                <div>Stats:{user.stats}</div>
                 <div>----------------------------------------------</div>'''
     return html
 
@@ -202,11 +245,10 @@ def users():
 @app.route('/user/<username>')
 def show_user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    stats = Stats.query.get_or_404(1)
     return f'''<div>Username: {user.username}</div>
             <div>Email: {user.email}</div>
             <div>Password:{user.password}</div>
-            <div>Stats:{stats}</div>
+            <div>Stats:{user.stats}</div>
             <div>----------------------------------------------</div>'''
 
 # Temporary Route to Clear Database
