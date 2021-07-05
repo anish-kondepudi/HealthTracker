@@ -59,29 +59,24 @@ def stats():
         flash(f'You are not logged in!', 'danger')
         return redirect(url_for('home'))
 
-    # Update stats.html with information from database
-    statsPage = open("./templates/stats.html", "w").close()
-    statsPage = open("./templates/stats.html", "w")
-
-    statsPage.write('{% extends "stats_layout.html" %}\n{% block rows %}\n')
-
+    # Create table of log entries
+    table = list()
     user = User.query.filter_by(username=session["username"]).first()
+    
     for entry in user.stats:
+        row = list()
+        row.append(str(entry.date_posted).split()[0])
+        row.append(entry.overall_feeling)
+        row.append(entry.time_slept)
+        row.append("Yes" if entry.worked_out else "No")
+        row.append(entry.ate_healthy)
+        row.append(entry.time_worked_out)
+        row.append(entry.workout_type)
+        row.append(entry.unhealthy_food)
+        row.append(entry.proud_achievement)
+        table.append(row)
 
-        statsPage.write(f'''<tr><th scope="row">{str(entry.date_posted).split()[0]}</th>
-                        <td>{entry.overall_feeling}</td>
-                        <td>{entry.time_slept}</td>
-                        <td>{"Yes" if entry.worked_out else "No"}</td>
-                        <td>{entry.ate_healthy}</td>
-                        <td>{entry.time_worked_out}</td>
-                        <td>{entry.workout_type}</td>
-                        <td>{entry.unhealthy_food}</td>
-                        <td>{entry.proud_achievement}</td></tr>''')
-
-    statsPage.write('\n{% endblock %}')
-    statsPage.close()
-
-    return render_template("stats.html")
+    return render_template("stats.html", table=table)
 
 @app.route("/log_data", methods=['GET', 'POST'])
 def log_data():

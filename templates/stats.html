@@ -1,12 +1,40 @@
-{% extends "stats_layout.html" %}
-{% block rows %}
-<tr><th scope="row">2021-07-04</th>
-                        <td>1</td>
-                        <td>12.0</td>
-                        <td>Yes</td>
-                        <td>Somewhat</td>
-                        <td>120</td>
-                        <td>Strength, Cardio, Other</td>
-                        <td>Ice Cream</td>
-                        <td>YESSIR</td></tr>
+{% extends "base.html" %}
+
+{% block title %}Statistics Page{% endblock %}
+
+{% block content %}
+<div class="shift">
+  <table class="table table-success table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Feeling</th>
+        <th scope="col">Sleep (Hours)</th>
+        <th scope="col">Worked Out</th>
+        <th scope="col">Ate Healthy</th>
+        <th scope="col">Time Worked Out (Hours)</th>
+        <th scope="col">Work Out Type</th>
+        <th scope="col">Unhealthy Food</th>
+        <th scope="col">Proud Achievement</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in table %}
+      <tr>
+        {% for cell in row %}
+          <td> {{cell}} </td>
+        {% endfor %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block css %}
+<style type="text/css">
+  .shift {
+    position: relative;
+    margin-top: 85px
+  }
+</style>
 {% endblock %}
