@@ -270,7 +270,7 @@ def logout():
 @app.route('/users')
 def users():
     try:
-        if session["username"] != "Warlus" or session["username"] != "kombuchan":
+        if session["username"] != "Warlus" and session["username"] != "kombuchan":
             return redirect(url_for('home'))
     except:
         flash('Not Logged in!', 'danger')
