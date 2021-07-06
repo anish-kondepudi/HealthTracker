@@ -289,7 +289,7 @@ def users():
 @app.route('/user/<username>')
 def show_user(username):
     try:
-        if session["username"] != "Warlus" or session["username"] != "kombuchan":
+        if session["username"] != "Warlus" and session["username"] != "kombuchan":
             return redirect(url_for('home'))
     except:
         flash('Not Logged in!', 'danger')
@@ -305,7 +305,7 @@ def show_user(username):
 @app.route('/clear_users')
 def clear_users():
     try:
-        if session["username"] != "Warlus" or session["username"] != "kombuchan":
+        if session["username"] != "Warlus" and session["username"] != "kombuchan":
             return redirect(url_for('home'))
     except:
         flash('Not Logged in!', 'danger')
@@ -320,7 +320,7 @@ def clear_users():
 # Temporary Route to Add csv data to Database
 @app.route('/bulk_insert_stats/<username>/<f>')
 def bulk_insert(username,f):
-    if session["username"] != "Warlus" or session["username"] != "kombuchan":
+    if session["username"] != "Warlus" and session["username"] != "kombuchan":
         return redirect(url_for('home'))
     user = User.query.filter_by(username=username).first_or_404()
     file = open(f,'r')
