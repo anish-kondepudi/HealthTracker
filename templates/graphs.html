@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}Graphs{% endblock %}
+
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+
+<div class="shift">
+
+  <p>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#feeling" role="button" aria-expanded="false" aria-controls="collapseExample">
+      Feeling
+    </a>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#sleep" role="button" aria-expanded="false" aria-controls="collapseExample">
+      Sleep
+    </a>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#workedOut" role="button" aria-expanded="false" aria-controls="collapseExample">
+      Worked Out
+    </a>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#ateHealthy" role="button" aria-expanded="false" aria-controls="collapseExample">
+      Ate Healthy
+    </a>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#timeWorkedOut" role="button" aria-expanded="false" aria-controls="collapseExample">
+      Time Worked Out
+    </a>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#workoutType" role="button" aria-expanded="false" aria-controls="collapseExample">
+      Workout Type
+    </a>
+  </p>
+
+  <div class="collapse" id="feeling">
+    <div class="card card-body">
+      <canvas id="feelingChart"></canvas>
+    </div>
+  </div>
+
+  <div class="collapse" id="sleep">
+    <div class="card card-body">
+      <canvas id="sleepChart"></canvas>
+    </div>
+  </div>
+
+  <div class="collapse" id="workedOut">
+    <div class="card card-body">
+      <canvas id="workOutChart" width=1260, height="500"></canvas>
+    </div>
+  </div>
+
+  <div class="collapse" id="ateHealthy">
+    <div class="card card-body">
+      <canvas id="ateHealthyChart" width=1260, height="500"></canvas>
+    </div>
+  </div>
+
+  <div class="collapse" id="timeWorkedOut">
+    <div class="card card-body">
+      <canvas id="workedOutTime"></canvas>
+    </div>
+  </div>
+
+  <div class="collapse" id="workoutType">
+    <div class="card card-body">
+      <canvas id="typeWorkout" width=1260, height="500"></canvas>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block js%}
+
+<script type="text/javascript">
+  var ctx = document.getElementById('feelingChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: {{ dates | safe }},
+          datasets: [{
+              label: 'Overall Feeling',
+              data: {{ feelings | safe }},
+              borderColor: "rgb(75, 192, 192)",
+              lineTension: 0.5
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+</script>
+
+<script type="text/javascript">
+  var ctx = document.getElementById('sleepChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: {{ dates | safe }},
+          datasets: [{
+              label: 'Sleep',
+              data: {{ sleep | safe }},
+              borderColor: "rgb(75, 192, 192)",
+              lineTension: 0.5
+          }]
+      },
+  });
+</script>
+
+<script type="text/javascript">
+  var ctx = document.getElementById('workOutChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: ['Yes', 'No'],
+          datasets: [{
+              label: 'Worked Out',
+              data: {{ workedOutBool | safe }},
+              backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+              ],
+              hoverOffset: 4
+          }]
+      },
+      options: {
+          responsive: false
+      }
+  });
+</script>
+
+<script type="text/javascript">
+  var ctx = document.getElementById('ateHealthyChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: ['Yes', 'No', 'Somewhat'],
+          datasets: [{
+              label: 'Ate Healthy',
+              data: {{ ateHealthy | safe }},
+              backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+              ],
+              hoverOffset: 4
+          }]
+      },
+      options: {
+          responsive: false
+      }
+  });
+</script>
+
+<script type="text/javascript">
+  var ctx = document.getElementById('workedOutTime').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: {{ dates | safe }},
+          datasets: [{
+              label: 'Time Worked Out',
+              data: {{ timeWorkedOut | safe }},
+              borderColor: "rgb(75, 192, 192)",
+              lineTension: 0.5
+          }]
+      },
+  });
+</script>
+
+<script type="text/javascript">
+  var ctx = document.getElementById('typeWorkout').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: ['Strength', 'Cardio', 'Other'],
+          datasets: [{
+              label: 'Type of Workout',
+              data: {{ workoutType | safe }},
+              backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+              ],
+              hoverOffset: 4
+          }]
+      },
+      options: {
+          responsive: false
+      }
+  });
+</script>
+
+{% endblock %}
+
+
+{% block css %}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='graphs.css') }}">
+{% endblock %}

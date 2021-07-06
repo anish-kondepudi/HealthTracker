@@ -1,3 +1,7 @@
+.content-block {
+	animation: transitionIn 0.75s;
+}
+
 .alert {
 	position: absolute;
 	padding: 20px;
@@ -36,4 +40,15 @@
 
 .nav-link:hover { 
 	color: #ffffff; 
+}
+
+@keyframes transitionIn {
+  from {
+    opacity: 0;
+    transform: rotateY(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
 }

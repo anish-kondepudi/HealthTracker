@@ -8,7 +8,7 @@ app.permanent_session_lifetime = timedelta(minutes=5)
 app.secret_key = "x{RD/'wutjN87mGN/acnEPSqkS4wp_"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' # change name to something more representative
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///userinfo.db'
 
 db = SQLAlchemy(app)
 
@@ -34,7 +34,7 @@ class Stats(db.Model):
     unhealthy_food = db.Column(db.String(500), nullable=False)
     proud_achievement = db.Column(db.String(2000), nullable=False)
 
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow) # change to date logged
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -59,29 +59,63 @@ def stats():
         flash(f'You are not logged in!', 'danger')
         return redirect(url_for('home'))
 
-    # Update stats.html with information from database
-    statsPage = open("./templates/stats.html", "w").close()
-    statsPage = open("./templates/stats.html", "w")
-
-    statsPage.write('{% extends "stats_layout.html" %}\n{% block rows %}\n')
-
+    # Create table of log entries
+    table = list()
     user = User.query.filter_by(username=session["username"]).first()
+    
     for entry in user.stats:
+        row = list()
+        row.append(str(entry.date_posted).split()[0])
+        row.append(entry.overall_feeling)
+        row.append(entry.time_slept)
+        row.append("Yes" if entry.worked_out else "No")
+        row.append(entry.ate_healthy)
+        row.append(entry.time_worked_out)
+        row.append(entry.workout_type)
+        row.append(entry.unhealthy_food)
+        row.append(entry.proud_achievement)
+        table.append(row)
 
-        statsPage.write(f'''<tr><th scope="row">{str(entry.date_posted).split()[0]}</th>
-                        <td>{entry.overall_feeling}</td>
-                        <td>{entry.time_slept}</td>
-                        <td>{"Yes" if entry.worked_out else "No"}</td>
-                        <td>{entry.ate_healthy}</td>
-                        <td>{entry.time_worked_out}</td>
-                        <td>{entry.workout_type}</td>
-                        <td>{entry.unhealthy_food}</td>
-                        <td>{entry.proud_achievement}</td></tr>''')
+    return render_template("stats.html", table=table)
 
-    statsPage.write('\n{% endblock %}')
-    statsPage.close()
+@app.route("/graphs")
+def graphs():
+    # If user is not logged in, redirect to home
+    if "username" not in session:
+        flash(f'You are not logged in!', 'danger')
+        return redirect(url_for('home'))
 
-    return render_template("stats.html")
+    # Pulls data from database and send to front end
+    user = User.query.filter_by(username=session["username"]).first()
+
+    dates = list()
+    sleep = list()
+    feelings = list()
+    timeWorkedOut = list()
+    workedOutBool = [0,0]
+    ateHealthy = [0,0,0]
+    workoutType = [0, 0, 0]
+
+    for stats in user.stats:
+
+        dates.append(str(stats.date_posted).split()[0])
+        timeWorkedOut.append(stats.time_worked_out)
+        feelings.append(stats.overall_feeling)
+        sleep.append(stats.time_slept)
+
+        if stats.worked_out: workedOutBool[0] += 1
+        else: workedOutBool[1] += 1
+
+        if stats.ate_healthy == 'Yes': ateHealthy[0] += 1
+        elif stats.ate_healthy == 'No': ateHealthy[1] += 1
+        else: ateHealthy[2] += 1
+
+        if 'Strength' in stats.workout_type: workoutType[0] += 1
+        if 'Cardio' in stats.workout_type: workoutType[1] += 1 
+        if 'Other' in stats.workout_type: workoutType[2] += 1 
+
+    return render_template("graphs.html", dates=dates, feelings=feelings, sleep=sleep, workedOutBool=workedOutBool, 
+                            ateHealthy=ateHealthy, timeWorkedOut=timeWorkedOut, workoutType=workoutType)
 
 @app.route("/log_data", methods=['GET', 'POST'])
 def log_data():
