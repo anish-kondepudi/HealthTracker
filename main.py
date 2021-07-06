@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, flash, redirect, request, ses
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
 from datetime import timedelta, datetime
+from csv import reader
 
 app = Flask(__name__)
 app.permanent_session_lifetime = timedelta(minutes=5)
@@ -264,6 +265,8 @@ def logout():
 # Temporary Route Made to See Entire Database
 @app.route('/users')
 def users():
+    if session["username"] != "Warlus" or session["username"] != "kombuchan":
+        return redirect(url_for('home'))
     users = User.query.all()
     html = ''
     for user in users:
@@ -277,6 +280,8 @@ def users():
 # Temporary Route Made to Specific User in Database
 @app.route('/user/<username>')
 def show_user(username):
+    if session["username"] != "Warlus" or session["username"] != "kombuchan":
+        return redirect(url_for('home'))
     user = User.query.filter_by(username=username).first_or_404()
     return f'''<div>Username: {user.username}</div>
             <div>Email: {user.email}</div>
@@ -287,12 +292,41 @@ def show_user(username):
 # Temporary Route to Clear Database
 @app.route('/clear_users')
 def clear_users():
+    if session["username"] != "Warlus" or session["username"] != "kombuchan":
+        return redirect(url_for('home'))
     try:
         db.session.query(User).delete()
         db.session.commit()
         return "Success - Database cleared"
     except:
         return "Failed - Database not cleared"
+
+# Temporary Route to Add csv data to Database
+@app.route('/bulk_insert_stats/<username>/<f>')
+def bulk_insert(username,f):
+    if session["username"] != "Warlus" or session["username"] != "kombuchan":
+        return redirect(url_for('home'))
+    user = User.query.filter_by(username=username).first_or_404()
+    file = open(f,'r')
+    days = 23
+    for line in reader(file) :
+        data = line
+        stats = Stats(overall_feeling=data[1],
+                time_slept=float(data[2]),
+                worked_out=(0 if not(data[3]=='Yes') else 1),
+                ate_healthy=str(data[4]), 
+                time_worked_out= (data[5] if not(data[5]=='') else 0),
+                workout_type= (str(data[6]) if not(data[6]=='') else "None"),
+                unhealthy_food=(str(data[7]) if not(data[6]=='') else "None"),
+                proud_achievement=(str(data[8]) if not(data[6]=='') else "None"),
+                date_logged = datetime.today() - timedelta(days=days),
+                owner=user)
+        days -= 1
+        db.session.add(stats)
+
+    db.session.commit()
+    file.close()
+    return "success"
 
 if __name__ == '__main__':
     app.run(debug=True)
