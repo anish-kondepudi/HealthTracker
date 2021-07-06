@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
 from datetime import timedelta, datetime
 from csv import reader
+import hashlib
 
 app = Flask(__name__)
 app.permanent_session_lifetime = timedelta(minutes=5)
@@ -193,7 +194,7 @@ def register():
         # Get User Input from HTML Form
         username = request.form.get("username")
         email = request.form.get("email")
-        password = str(hash(request.form.get("password")))
+        password = str(hashlib.md5(request.form.get("password").encode()).hexdigest())
 
         user = User(username=username, email=email, password=password)
 
@@ -234,11 +235,14 @@ def login():
 
         # Get User Input from HTML Form
         email = request.form.get("email")
-        password = str(hash(request.form.get("password")))
+        password = str(hashlib.md5(request.form.get("password").encode()).hexdigest())
 
         # Check if Login Credentials are correct
+        print(password)
+        print(str(hash(password)))
         user = User.query.filter_by(email=email).first()
-        if user is not None and form.email.data == user.email and str(hash(form.password.data)) == user.password: 
+        print(user.password)
+        if user is not None and email == user.email and password == user.password: 
             # Create session for user then redirect to home
             session.permanent = True
             session["username"] = user.username
@@ -265,7 +269,11 @@ def logout():
 # Temporary Route Made to See Entire Database
 @app.route('/users')
 def users():
-    if session["username"] != "Warlus" or session["username"] != "kombuchan":
+    try:
+        if session["username"] != "Warlus" or session["username"] != "kombuchan":
+            return redirect(url_for('home'))
+    except:
+        flash('Not Logged in!', 'danger')
         return redirect(url_for('home'))
     users = User.query.all()
     html = ''
@@ -280,7 +288,11 @@ def users():
 # Temporary Route Made to Specific User in Database
 @app.route('/user/<username>')
 def show_user(username):
-    if session["username"] != "Warlus" or session["username"] != "kombuchan":
+    try:
+        if session["username"] != "Warlus" or session["username"] != "kombuchan":
+            return redirect(url_for('home'))
+    except:
+        flash('Not Logged in!', 'danger')
         return redirect(url_for('home'))
     user = User.query.filter_by(username=username).first_or_404()
     return f'''<div>Username: {user.username}</div>
@@ -292,7 +304,11 @@ def show_user(username):
 # Temporary Route to Clear Database
 @app.route('/clear_users')
 def clear_users():
-    if session["username"] != "Warlus" or session["username"] != "kombuchan":
+    try:
+        if session["username"] != "Warlus" or session["username"] != "kombuchan":
+            return redirect(url_for('home'))
+    except:
+        flash('Not Logged in!', 'danger')
         return redirect(url_for('home'))
     try:
         db.session.query(User).delete()
