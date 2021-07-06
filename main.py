@@ -16,8 +16,7 @@ class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image = db.Column(db.String(20), nullable=False, default='default.jpg') # delete and reconstruct DB - change db name
-    password = db.Column(db.String(60), nullable=False) # use hash
+    password = db.Column(db.String(60), nullable=False)
     stats = db.relationship('Stats', backref='owner', lazy=True)
 
     def __repr__(self) :
@@ -34,7 +33,7 @@ class Stats(db.Model):
     unhealthy_food = db.Column(db.String(500), nullable=False)
     proud_achievement = db.Column(db.String(2000), nullable=False)
 
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow) # change to date logged
+    date_logged = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -65,7 +64,7 @@ def stats():
     
     for entry in user.stats:
         row = list()
-        row.append(str(entry.date_posted).split()[0])
+        row.append(str(entry.date_logged).split()[0])
         row.append(entry.overall_feeling)
         row.append(entry.time_slept)
         row.append("Yes" if entry.worked_out else "No")
@@ -98,7 +97,7 @@ def graphs():
 
     for stats in user.stats:
 
-        dates.append(str(stats.date_posted).split()[0])
+        dates.append(str(stats.date_logged).split()[0])
         timeWorkedOut.append(stats.time_worked_out)
         feelings.append(stats.overall_feeling)
         sleep.append(stats.time_slept)
@@ -168,7 +167,7 @@ def log_data():
         date_today = str(datetime.today()).split()[0]
 
         for entry in user.stats:
-            if str(entry.date_posted).split()[0] == date_today:
+            if str(entry.date_logged).split()[0] == date_today:
                 db.session.delete(entry)
 
         # Updates Changes to Database
@@ -193,7 +192,7 @@ def register():
         # Get User Input from HTML Form
         username = request.form.get("username")
         email = request.form.get("email")
-        password = request.form.get("password")
+        password = str(hash(request.form.get("password")))
 
         user = User(username=username, email=email, password=password)
 
@@ -234,11 +233,11 @@ def login():
 
         # Get User Input from HTML Form
         email = request.form.get("email")
-        password = request.form.get("password")
+        password = str(hash(request.form.get("password")))
 
         # Check if Login Credentials are correct
         user = User.query.filter_by(email=email).first()
-        if user is not None and form.email.data == user.email and form.password.data == user.password: 
+        if user is not None and form.email.data == user.email and str(hash(form.password.data)) == user.password: 
             # Create session for user then redirect to home
             session.permanent = True
             session["username"] = user.username
