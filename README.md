@@ -36,7 +36,7 @@ __Page which shows several graph of user's data:__
 
 _- The site is currently being hosted on https://warlus.pythonanywhere.com/, this will stop on 10/07/2021_
 
-_- Currently, the does not support comparison of data between users. This may be added in future updates_
+_- Currently, the site does not support comparison of data between users. This may be added in future updates_
 
 _- At the moment there is no functionality for the "forgot password" button, this will be fixed in future updates_
 
