@@ -15,7 +15,7 @@ __Below are the languages used in creating this Web App:__
 
 __Below are the modules/frameworks/libraries used in creating this Web App:__
 ```bash
-1. Flask & Jinja2
+1. Flask \& Jinja2
 2. Bootstrap
 3. Charts.js
 4. SQLAlchemy
