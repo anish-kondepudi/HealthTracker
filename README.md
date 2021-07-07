@@ -1,6 +1,6 @@
 # Health Tracker
 
-Health Tracker is a Web Application created to track your fitness journey! You can log your sleep, diet, exercise, and mental health and recieve insightful statistics back.
+Health Tracker is a Web Application created to track your fitness journey! You can log your sleep, diet, exercise, and mental health and receive insightful statistics back.
 
 This project was architected by [Anish Kondepudi](https://github.com/anish-kondepudi) and [Mihika Krishna](https://https://github.com/kombuchan).
 
