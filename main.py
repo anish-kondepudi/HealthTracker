@@ -2,7 +2,6 @@ from flask import Flask, render_template, url_for, flash, redirect, request, ses
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
 from datetime import timedelta, datetime
-from csv import reader
 import hashlib
 
 app = Flask(__name__)
@@ -22,7 +21,7 @@ class User(db.Model):
     stats = db.relationship('Stats', backref='owner', lazy=True)
 
     def __repr__(self) :
-        return f"User('{self.username}','{self.email}','{self.image}')"
+        return f"User('{self.username}','{self.email}')"
 
 class Stats(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -169,7 +168,8 @@ def log_data():
         date_today = str(datetime.today()).split()[0]
 
         for entry in user.stats:
-            if str(entry.date_logged).split()[0] == date_today:
+            date_entry = str(entry.date_logged).split()[0]
+            if date_today == date_entry:
                 db.session.delete(entry)
 
         # Updates Changes to Database
@@ -194,7 +194,7 @@ def register():
         # Get User Input from HTML Form
         username = request.form.get("username")
         email = request.form.get("email")
-        password = str(hashlib.md5(request.form.get("password").encode()).hexdigest())
+        password = str(hashlib.md5(request.form.get("password").encode()).hexdigest()) # Hash Password
 
         user = User(username=username, email=email, password=password)
 
@@ -222,7 +222,6 @@ def register():
 
     return render_template('register.html', title='Register', form=form)
 
-
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     # If user is already logged in, redirect to home
@@ -235,13 +234,11 @@ def login():
 
         # Get User Input from HTML Form
         email = request.form.get("email")
-        password = str(hashlib.md5(request.form.get("password").encode()).hexdigest())
+        password = str(hashlib.md5(request.form.get("password").encode()).hexdigest()) # Hash Password
 
         # Check if Login Credentials are correct
-        print(password)
-        print(str(hash(password)))
         user = User.query.filter_by(email=email).first()
-        print(user.password)
+
         if user is not None and email == user.email and password == user.password: 
             # Create session for user then redirect to home
             session.permanent = True
@@ -260,89 +257,6 @@ def logout():
         flash(f'Welcome back, {session["username"]}!', 'success')
         session.pop("username", None)
     return redirect(url_for("home"))
-
-
-#############################################
-### TEMPORARY ROUTES FOR TESTING PURPOSES ###
-#############################################
-
-# Temporary Route Made to See Entire Database
-@app.route('/users')
-def users():
-    try:
-        if session["username"] != "Warlus" and session["username"] != "kombuchan":
-            return redirect(url_for('home'))
-    except:
-        flash('Not Logged in!', 'danger')
-        return redirect(url_for('home'))
-    users = User.query.all()
-    html = ''
-    for user in users:
-        html += f'''<div>Username: {user.username}</div>
-                <div>Email: {user.email}</div>
-                <div>Password:{user.password}</div>
-                <div>Stats:{user.stats}</div>
-                <div>----------------------------------------------</div>'''
-    return html
-
-# Temporary Route Made to Specific User in Database
-@app.route('/user/<username>')
-def show_user(username):
-    try:
-        if session["username"] != "Warlus" and session["username"] != "kombuchan":
-            return redirect(url_for('home'))
-    except:
-        flash('Not Logged in!', 'danger')
-        return redirect(url_for('home'))
-    user = User.query.filter_by(username=username).first_or_404()
-    return f'''<div>Username: {user.username}</div>
-            <div>Email: {user.email}</div>
-            <div>Password:{user.password}</div>
-            <div>Stats:{user.stats}</div>
-            <div>----------------------------------------------</div>'''
-
-# Temporary Route to Clear Database
-@app.route('/clear_users')
-def clear_users():
-    try:
-        if session["username"] != "Warlus" and session["username"] != "kombuchan":
-            return redirect(url_for('home'))
-    except:
-        flash('Not Logged in!', 'danger')
-        return redirect(url_for('home'))
-    try:
-        db.session.query(User).delete()
-        db.session.commit()
-        return "Success - Database cleared"
-    except:
-        return "Failed - Database not cleared"
-
-# Temporary Route to Add csv data to Database
-@app.route('/bulk_insert_stats/<username>/<f>')
-def bulk_insert(username,f):
-    if session["username"] != "Warlus" and session["username"] != "kombuchan":
-        return redirect(url_for('home'))
-    user = User.query.filter_by(username=username).first_or_404()
-    file = open(f,'r')
-    days = 23
-    for line in reader(file) :
-        data = line
-        stats = Stats(overall_feeling=data[1],
-                time_slept=float(data[2]),
-                worked_out=(0 if not(data[3]=='Yes') else 1),
-                ate_healthy=str(data[4]), 
-                time_worked_out= (data[5] if not(data[5]=='') else 0),
-                workout_type= (str(data[6]) if not(data[6]=='') else "None"),
-                unhealthy_food=(str(data[7]) if not(data[6]=='') else "None"),
-                proud_achievement=(str(data[8]) if not(data[6]=='') else "None"),
-                date_logged = datetime.today() - timedelta(days=days),
-                owner=user)
-        days -= 1
-        db.session.add(stats)
-
-    db.session.commit()
-    file.close()
-    return "success"
 
 if __name__ == '__main__':
     app.run(debug=True)
