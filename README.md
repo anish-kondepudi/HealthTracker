@@ -25,15 +25,16 @@ __Below are the modules/frameworks/libraries used in creating this Web App:__
 
 __Shown below is the final product of the Health Tracker Web Application:__
 
-_Page where user would enter their data:_
-![logdata](https://user-images.githubusercontent.com/72046642/124823716-5ef81500-df26-11eb-969f-33635daf68fb.PNG)
+__Page where user would enter their data:__
+![Log Data](https://user-images.githubusercontent.com/72046642/124824382-29076080-df27-11eb-8267-774beae3623e.PNG)
 
-_Page which shows all of user's entries:_
-![stats](https://user-images.githubusercontent.com/72046642/124823697-5bfd2480-df26-11eb-890f-6b8f4ad35ad1.PNG)
 
-_Page which shows several graph of user's data:_
-![graph1](https://user-images.githubusercontent.com/72046642/124823731-61f30580-df26-11eb-814b-8c973c553102.PNG)
-![graph2](https://user-images.githubusercontent.com/72046642/124823723-60c1d880-df26-11eb-9142-76254b69d841.PNG)
+__Page which shows all of user's entries:__
+![Statistics](https://user-images.githubusercontent.com/72046642/124824464-40464e00-df27-11eb-8eb1-4bc32b5bf6a7.PNG)
+
+__Page which shows several graph of user's data:__
+![Graph 1](https://user-images.githubusercontent.com/72046642/124824474-42a8a800-df27-11eb-84c4-11de0a3eb8da.png)
+![Graph 2](https://user-images.githubusercontent.com/72046642/124824478-43d9d500-df27-11eb-962a-19f55ebd3531.png)
 
 **Notes:**
 
