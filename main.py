@@ -2,6 +2,8 @@ from flask import Flask, render_template, url_for, flash, redirect, request, ses
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
 from datetime import timedelta, datetime
+from csv import reader
+import hashlib
 
 app = Flask(__name__)
 app.permanent_session_lifetime = timedelta(minutes=5)
@@ -16,8 +18,7 @@ class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image = db.Column(db.String(20), nullable=False, default='default.jpg') # delete and reconstruct DB - change db name
-    password = db.Column(db.String(60), nullable=False) # use hash
+    password = db.Column(db.String(60), nullable=False)
     stats = db.relationship('Stats', backref='owner', lazy=True)
 
     def __repr__(self) :
@@ -34,7 +35,7 @@ class Stats(db.Model):
     unhealthy_food = db.Column(db.String(500), nullable=False)
     proud_achievement = db.Column(db.String(2000), nullable=False)
 
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow) # change to date logged
+    date_logged = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -65,7 +66,7 @@ def stats():
     
     for entry in user.stats:
         row = list()
-        row.append(str(entry.date_posted).split()[0])
+        row.append(str(entry.date_logged).split()[0])
         row.append(entry.overall_feeling)
         row.append(entry.time_slept)
         row.append("Yes" if entry.worked_out else "No")
@@ -98,7 +99,7 @@ def graphs():
 
     for stats in user.stats:
 
-        dates.append(str(stats.date_posted).split()[0])
+        dates.append(str(stats.date_logged).split()[0])
         timeWorkedOut.append(stats.time_worked_out)
         feelings.append(stats.overall_feeling)
         sleep.append(stats.time_slept)
@@ -168,7 +169,7 @@ def log_data():
         date_today = str(datetime.today()).split()[0]
 
         for entry in user.stats:
-            if str(entry.date_posted).split()[0] == date_today:
+            if str(entry.date_logged).split()[0] == date_today:
                 db.session.delete(entry)
 
         # Updates Changes to Database
@@ -193,7 +194,7 @@ def register():
         # Get User Input from HTML Form
         username = request.form.get("username")
         email = request.form.get("email")
-        password = request.form.get("password")
+        password = str(hashlib.md5(request.form.get("password").encode()).hexdigest())
 
         user = User(username=username, email=email, password=password)
 
@@ -234,11 +235,14 @@ def login():
 
         # Get User Input from HTML Form
         email = request.form.get("email")
-        password = request.form.get("password")
+        password = str(hashlib.md5(request.form.get("password").encode()).hexdigest())
 
         # Check if Login Credentials are correct
+        print(password)
+        print(str(hash(password)))
         user = User.query.filter_by(email=email).first()
-        if user is not None and form.email.data == user.email and form.password.data == user.password: 
+        print(user.password)
+        if user is not None and email == user.email and password == user.password: 
             # Create session for user then redirect to home
             session.permanent = True
             session["username"] = user.username
@@ -265,6 +269,12 @@ def logout():
 # Temporary Route Made to See Entire Database
 @app.route('/users')
 def users():
+    try:
+        if session["username"] != "Warlus" and session["username"] != "kombuchan":
+            return redirect(url_for('home'))
+    except:
+        flash('Not Logged in!', 'danger')
+        return redirect(url_for('home'))
     users = User.query.all()
     html = ''
     for user in users:
@@ -278,6 +288,12 @@ def users():
 # Temporary Route Made to Specific User in Database
 @app.route('/user/<username>')
 def show_user(username):
+    try:
+        if session["username"] != "Warlus" and session["username"] != "kombuchan":
+            return redirect(url_for('home'))
+    except:
+        flash('Not Logged in!', 'danger')
+        return redirect(url_for('home'))
     user = User.query.filter_by(username=username).first_or_404()
     return f'''<div>Username: {user.username}</div>
             <div>Email: {user.email}</div>
@@ -289,11 +305,44 @@ def show_user(username):
 @app.route('/clear_users')
 def clear_users():
     try:
+        if session["username"] != "Warlus" and session["username"] != "kombuchan":
+            return redirect(url_for('home'))
+    except:
+        flash('Not Logged in!', 'danger')
+        return redirect(url_for('home'))
+    try:
         db.session.query(User).delete()
         db.session.commit()
         return "Success - Database cleared"
     except:
         return "Failed - Database not cleared"
+
+# Temporary Route to Add csv data to Database
+@app.route('/bulk_insert_stats/<username>/<f>')
+def bulk_insert(username,f):
+    if session["username"] != "Warlus" and session["username"] != "kombuchan":
+        return redirect(url_for('home'))
+    user = User.query.filter_by(username=username).first_or_404()
+    file = open(f,'r')
+    days = 23
+    for line in reader(file) :
+        data = line
+        stats = Stats(overall_feeling=data[1],
+                time_slept=float(data[2]),
+                worked_out=(0 if not(data[3]=='Yes') else 1),
+                ate_healthy=str(data[4]), 
+                time_worked_out= (data[5] if not(data[5]=='') else 0),
+                workout_type= (str(data[6]) if not(data[6]=='') else "None"),
+                unhealthy_food=(str(data[7]) if not(data[6]=='') else "None"),
+                proud_achievement=(str(data[8]) if not(data[6]=='') else "None"),
+                date_logged = datetime.today() - timedelta(days=days),
+                owner=user)
+        days -= 1
+        db.session.add(stats)
+
+    db.session.commit()
+    file.close()
+    return "success"
 
 if __name__ == '__main__':
     app.run(debug=True)
