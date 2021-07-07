@@ -1,14 +1,10 @@
-# HealthTracker
-A website to track your fitness and health journey!
-(started on 6/18/21)
-
 # Health Tracker
 
-Health Tracker is a Web App created to track your fitness journey! You can log your sleep, diet, exercise, and mental health and recieve insightful statistics back.
+Health Tracker is a Web Application created to track your fitness journey! You can log your sleep, diet, exercise, and mental health and recieve insightful statistics back.
 
 This project was architected by [Anish Kondepudi](https://github.com/anish-kondepudi) and [Mihika Krishna](https://https://github.com/kombuchan).
 
-Below are the languages used in creating this Web App:
+__Below are the languages used in creating this Web App:__
 
 ```bash
 1. Python
@@ -17,7 +13,7 @@ Below are the languages used in creating this Web App:
 4. JavaScript
 ```
 
-Below are the modules/frameworks/libraries used in creating this Web App:
+__Below are the modules/frameworks/libraries used in creating this Web App:__
 ```bash
 1. Flask & Jinja2
 2. Bootstrap
@@ -27,17 +23,17 @@ Below are the modules/frameworks/libraries used in creating this Web App:
 6. Flask-WTF
 ```
 
-Shown below is the final product of the Health Tracker Web Application:
+__Shown below is the final product of the Health Tracker Web Application:__
 
-<u>Page where user would enter their data</u>
+_Page where user would enter their data:_
 ![Image](README_metadata/logdata.png)
 
-<u>Page which shows all of user's entries</u>
+_Page which shows all of user's entries:_
 ![Image](README_metadata/stats.png)
 
-<u>Page which shows several graph of user's data</u>
-![Image](README_metadata/stats.png)
-![Image](README_metadata/stats.png)
+_Page which shows several graph of user's data:_
+![Image](README_metadata/graph1.png)
+![Image](README_metadata/graph2.png)
 
 **Notes:**
 
