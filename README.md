@@ -26,14 +26,14 @@ __Below are the modules/frameworks/libraries used in creating this Web App:__
 __Shown below is the final product of the Health Tracker Web Application:__
 
 _Page where user would enter their data:_
-![Image](README_metadata/logdata.png)
+![logdata](https://user-images.githubusercontent.com/72046642/124823716-5ef81500-df26-11eb-969f-33635daf68fb.PNG)
 
 _Page which shows all of user's entries:_
-![Image](README_metadata/stats.png)
+![stats](https://user-images.githubusercontent.com/72046642/124823697-5bfd2480-df26-11eb-890f-6b8f4ad35ad1.PNG)
 
 _Page which shows several graph of user's data:_
-![Image](README_metadata/graph1.png)
-![Image](README_metadata/graph2.png)
+![graph1](https://user-images.githubusercontent.com/72046642/124823731-61f30580-df26-11eb-814b-8c973c553102.PNG)
+![graph2](https://user-images.githubusercontent.com/72046642/124823723-60c1d880-df26-11eb-9142-76254b69d841.PNG)
 
 **Notes:**
 
