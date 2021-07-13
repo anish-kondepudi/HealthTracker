@@ -181,6 +181,44 @@ def log_data():
 
     return render_template("log_data.html")
 
+@app.route("/search", methods=['GET', 'POST'])
+def search():
+    # If user is not logged in, redirect to home
+    if "username" not in session:
+        flash(f'You are not logged in!', 'danger')
+        return redirect(url_for('home'))
+
+    # Fires when submit button is pressed
+    if request.method == 'POST':
+
+        username = request.form.get("username")
+        user = User.query.filter_by(username=username).first()
+        
+        # If user doesn't exist, flash error
+        if user is None:
+            flash(f'Username does not exist', 'danger')
+            return render_template("search.html")
+
+        # Send table data of user to frontend
+        table = list()
+ 
+        for entry in user.stats:
+            row = list()
+            row.append(str(entry.date_logged).split()[0])
+            row.append(entry.overall_feeling)
+            row.append(entry.time_slept)
+            row.append("Yes" if entry.worked_out else "No")
+            row.append(entry.ate_healthy)
+            row.append(entry.time_worked_out)
+            row.append(entry.workout_type)
+            row.append(entry.unhealthy_food)
+            row.append(entry.proud_achievement)
+            table.append(row)
+
+        return render_template("search.html", table=table)
+
+    return render_template("search.html")
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     # If user is already logged in, redirect to home

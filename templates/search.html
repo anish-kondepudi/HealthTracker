@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Search User{% endblock %}
+
+
+{% block content %}
+
+
+<div class="shift">
+    <form action="" method="POST">
+        <div class="input-group">
+            <input class="form-control width100" name="username" placeholder="Search Username">
+            <span class="input-group-btn">
+                <button class="btn btn-info">Search</button>
+            </span>
+        </div>
+    </form>
+</div><br>
+
+{% if table %}
+<table class="table table-success table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Feeling</th>
+        <th scope="col">Sleep (Hours)</th>
+        <th scope="col">Worked Out</th>
+        <th scope="col">Ate Healthy</th>
+        <th scope="col">Time Worked Out (Hours)</th>
+        <th scope="col">Work Out Type</th>
+        <th scope="col">Unhealthy Food</th>
+        <th scope="col">Proud Achievement</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in table %}
+      <tr>
+        {% for cell in row %}
+          <td> {{cell}} </td>
+        {% endfor %}
+      {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock %}
+
+{% block css %}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='search.css') }}">
+{% endblock %}
+

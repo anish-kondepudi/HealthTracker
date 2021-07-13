@@ -1,0 +1,24 @@
+.shift {
+  position: relative;
+  margin-top: 75px
+}
+.btn {
+  background-color: #03a56a;
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+.btn:hover {
+    color: white;
+    background: #009d00;
+    border-color: #008900;
+}
+.btn:focus {
+    color: white;
+    background: #009d00;
+    border-color: #008900;
+}
