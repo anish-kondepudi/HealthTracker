@@ -4,62 +4,89 @@
 
 {% block content %}
 
-{% if get_flashed_messages() %}
-  {% for msg in get_flashed_messages() %}
-    <div class="alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      {{msg}}
-    </div>
-  {% endfor %}
-{% endif %}
 <div class="shift">
-  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="https://i.pinimg.com/originals/ff/7e/85/ff7e850d4e4b70ae1208bea22cf4e32f.jpg" class="d-block w-100" alt="awfwe">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Vince Lombardi Jr</h5>
-          <p>“Once you learn to quit, it becomes a habit.¨</p>
-        </div>
+  {% if get_flashed_messages() %}
+    {% for msg in get_flashed_messages() %}
+      <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        {{msg}}
       </div>
-      <div class="carousel-item">
-        <img src="http://images6.fanpop.com/image/photos/40300000/Canada-See-Lake-Nature-See-nathii1-40320458-900-600.jpg" class="d-block w-100" alt="qwdqg">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Karen Lamb</h5>
-          <p>¨A year from now you may wish you had started today.¨</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="https://i.pinimg.com/originals/b2/60/61/b26061c5d731074ebd6ea5f292b7624b.jpg" class="d-block w-100" alt="qwdqwd">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>John Wooden</h5>
-          <p>¨Don’t give up on your dreams, or your dreams will give up on you.¨</p>
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+    {% endfor %}
+  {% endif %}
+  <div class="title">
+    <h1 aria-label="Health Tracker"></h1>
+
   </div>
+</div>
+{% endblock %}
+
+{% block homepage %}
+
+<div class="outer_wrapper">
+  <div class="wrapper">
+      <div class="cat_wrapper">
+        <div class="cat first_pose">
+          <div class="cat_head">
+            <svg x="0px" y="0px" width="100%" height="100%" viewBox="0 0 76.4 61.2" >
+              <polygon class="eyes" points="63.8,54.1 50.7,54.1 50.7,59.6 27.1,59.6 27.1,54.1 12.4,54.1 12.4,31.8 63.8,31.8 "/>
+              <path d="M15.3,45.9h5.1V35.7h-5.1C15.3,35.7,15.3,45.9,15.3,45.9z M45.8,56.1V51H30.6v5.1H45.8z M61.1,35.7H56v10.2h5.1
+                V35.7z M10.2,61.2v-5.1H5.1V51H0V25.5h5.1V15.3h5.1V5.1h5.1V0h5.1v5.1h5.1v5.1h5.1v5.1c0,0,15.2,0,15.2,0v-5.1h5.1V5.1H56V0h5.1v5.1
+                h5.1v10.2h5.1v10.2h5.1l0,25.5h-5.1v5.1h-5.1v5.1H10.2z"/>
+            </svg>
+
+          </div>
+          <div class="body">
+            <svg x="0px" y="0px" width="100%" height="100%" viewBox="0 0 91.7 40.8" >
+              <path class="st0" d="M91.7,40.8H0V10.2h5.1V5.1h5.1V0h66.2v5.1h10.2v5.1h5.1L91.7,40.8z"/>
+            </svg>
+
+            <div class="tail">
+              <svg x="0px" y="0px" width="100%" height="100%" viewBox="0 0 25.5 61.1" >
+                <polygon class="st0" points="10.2,56 10.2,50.9 5.1,50.9 5.1,40.7 0,40.7 0,20.4 5.1,20.4 5.1,10.2 10.2,10.2 10.2,5.1 15.3,5.1 
+                  15.3,0 25.5,0 25.5,10.2 20.4,10.2 20.4,15.3 15.3,15.3 15.3,20.4 10.2,20.4 10.2,40.7 15.3,40.7 15.3,45.8 20.4,45.8 20.4,50.9 
+                  25.5,50.9 25.5,61.1 15.3,61.1 15.3,56 "/>
+              </svg>
+            </div>
+          </div>
+          
+          <div class="front_legs">
+            <div class="leg one">
+              <svg x="0px" y="0px" width="100%" height="100%" viewBox="0 0 14 30.5" >
+                <polygon points="15.3,30.5 5.1,30.5 5.1,25.4 0,25.4 0,0 15.3,0 "/>
+              </svg>
+            </div>
+            <div class="leg two">
+              <svg x="0px" y="0px" width="100%" height="100%" viewBox="0 0 14 30.5" >
+                <polygon points="15.3,30.5 5.1,30.5 5.1,25.4 0,25.4 0,0 15.3,0 "/>
+              </svg>
+            </div>  
+          </div>
+          
+          <div class="back_legs">
+            <div class="leg three">
+              <svg x="0px" y="0px" width="100%" height="100%" viewBox="0 0 14 30.5" >
+                <polygon points="15.3,30.5 5.1,30.5 5.1,25.4 0,25.4 0,0 15.3,0 "/>
+              </svg>
+            </div>
+            <div class="leg four">
+              <svg x="0px" y="0px" width="100%" height="100%" viewBox="0 0 14 30.5" >
+                <polygon points="15.3,30.5 5.1,30.5 5.1,25.4 0,25.4 0,0 15.3,0 "/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+  <div class="ground"></div>
 </div>
 
 {% endblock %}
 
+
 {% block css %}
-<style type="text/css">
-  .shift {
-    position: relative;
-    margin-top: 55px
-  }
-</style>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='home.css') }}">
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{{ url_for('static', filename='home.js') }}"></script>
 {% endblock %}
