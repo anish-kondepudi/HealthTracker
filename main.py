@@ -249,7 +249,6 @@ def register():
         # Add user to database
         db.session.add(user)
         db.session.commit()
-        flash(f'Account created for {username}!', 'success')
 
         # Create session for user
         session.permanent = True

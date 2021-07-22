@@ -5,17 +5,8 @@
 {% block content %}
 
 <div class="shift">
-  {% if get_flashed_messages() %}
-    {% for msg in get_flashed_messages() %}
-      <div class="alert">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        {{msg}}
-      </div>
-    {% endfor %}
-  {% endif %}
   <div class="title">
     <h1 aria-label="Health Tracker"></h1>
-
   </div>
 </div>
 {% endblock %}
