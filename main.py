@@ -76,7 +76,7 @@ def stats():
         row.append(entry.proud_achievement)
         table.append(row)
 
-    return render_template("stats.html", table=table)
+    return render_template("stats.html", table=table[::-1])
 
 @app.route("/graphs")
 def graphs():
